@@ -3,6 +3,7 @@ Team members :
 - Amani Musallam
 - Nour Eddein Al Abbassi
 - Hind Hbashneh
+- Abedalqader Alkhatib
 # Deliverable
 ## *Cooperation Plan*
 
