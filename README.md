@@ -127,3 +127,34 @@ We will create branches for each feature and the team leader have the responsibi
 
     - Before starting new feature 
 
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+# Project Description
+##  Canteen Management System  
+
+### **Summary of idea.**
+
+School Canteen management system ( basic point of sales while no Cash is there only credit added by parents )
+and add full parent control on the daily credit amount
+daily allowed and not allowed meal .
+#### **What problem or pain point does it solve?**
+  1. The problem of students lost their money
+  2. Buy the  not allowed meal for their health issue .
+  3. Control the allowance amount of money they can spend 
+#### **Minimum Viable Product (MVP) definition.**
+
+Point of sale system with selected full parent control
+
+- The parents can add the amount of money to save in the student balance
+- The parents can specify the allowed meal for their children
+- The parents can choose a specific meal for their children
+- The daily balance for the children
+- report for the parents 
+
+ 
