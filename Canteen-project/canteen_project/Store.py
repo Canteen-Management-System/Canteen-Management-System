@@ -1,14 +1,18 @@
+import pandas as pd
+import json
+
+
 class Store():
     def __init__(self):
         self.menu = "menu"
-    
-    
-    @staticmethod
-    def get_items():
-        menu= """*  Choose your item  *
-                *  1- Item: 1, Price: 0.2 JOD  *
-                *  2- Item: 2, Price: 0.5 JOD  *
-                *  3- Item: 3, Price: 0.1 JOD  *
-                *  4- Item: 4, Price: 0.35 JOD * """
+
+    def _get_menu_data(self):
+        with open('../menu.json', 'r') as f:
+            menu = json.load(f)
         return menu
-    
+
+    def get_items(self, key):
+        items = self._get_menu_data()
+        indics = [i for i in range(len(items[key]))]
+        table = pd.DataFrame(items[key], indics, items['headers'])
+        return table, items[key]
