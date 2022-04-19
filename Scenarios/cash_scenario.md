@@ -1,20 +1,24 @@
 *** Welcome to canteen MS ***
 
+
+
+>>  Enter category Hot food (H), Snacks (S), Juices (J): H
+
 *  Choose your item  *
-*  1- Item: 1, Price: 0.2 JOD  *
-*  2- Item: 2, Price: 0.5 JOD  *
-*  3- Item: 3, Price: 0.1 JOD  *
-*  4- Item: 4, Price: 0.35 JOD *
+*  0- meal 1: fresh soups with wholemeal bread rolls on the side, Price: 2.0 JOD  *
+*  1- meal 2: pasta or lasagne with fresh tomato, bolognaise or vegetable-based sauce, Price: 2.5 JOD  *
 
->> Enter your item: 1
+>> Enter your order: 0
 
 >> Enter quantity: 1
 
->> Choose another item (C), Check out (O): c
+>> Choose another item (C), Check out (O), back to categories (G) : G
 
->>> Enter your item: 2
+>>  Enter category Hot food (H), Snacks (S), Juices (J): J
 
->> Enter quantity: 1
+*  Choose your item  *
+*  0- Apple juice, Price: 2.0 JOD  *
+*  1- meal 2: pasta or lasagne with fresh tomato, bolognaise or vegetable-based sauce, Price: 2.5 JOD  *
 
 >> Choose another item (C), Check out (O): o
 
