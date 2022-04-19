@@ -4,10 +4,13 @@ Team members :
 - Nour Eddein Al Abbassi
 - Hind Hbashneh
 - Abedalqader Alkhatib
+
 # Deliverable
+
 ## *Cooperation Plan*
 
 #### **What are the key strengths of each person on the team?**
+
 | Amani | Nouraldeen | Hind | Mohammad | 
 | --- | --- | --- | ---|
 | Data structure  | Problem Solving Skills/ react  | Data Visualization/ good design skills/django   | Problem solving/ object oriented |
