@@ -3,12 +3,29 @@ import pandas as pd
 
 
 
-class Operations:
-    def __init__():
+class Operations():
+    def __init__(self):
         pass
 
-    def recharge():
-        pass
+    def recharge(stdId,RechAmount):
+        P1= ParentPortal()
+        AllstdInfo = P1._get_students_data()
+        for p in AllstdInfo:
+            if p['id'] == int(stdId):
+                p["Balance"] += float(RechAmount)
+        # Serializing json 
+        json_object = json.dumps(AllstdInfo, indent = 4)
+  
+        # Writing to sample.json
+        with open('/home/student88/CanteenMangmentSystem/Canteen-Management-System/Canteen-project/Student_info.json', "w") as outfile:
+            outfile.write(json_object)
+        def search(id):
+            for p in AllstdInfo:
+                if p['id'] == int(stdId):
+                    return p
+        data = search(stdId)
+        P1.print_std_info(data)
+        return data
 
     def max_daily_credit(stdid , maxCred):
         P1= ParentPortal()
@@ -59,7 +76,8 @@ class ParentPortal:
             if oper == "Q":
                 break
             elif oper == "R":
-                Operations.recharge()
+                RechAmount = input("Enter amount of charge: ")
+                Operations.recharge(stdId,RechAmount)
             elif oper == "M":
                 maxCred = input("Enter the daily balance: ")
                 Operations.max_daily_credit(stdId , maxCred )
