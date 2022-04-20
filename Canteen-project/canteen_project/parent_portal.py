@@ -34,8 +34,7 @@ class Operations:
 
 class ParentPortal:
     def __init__(self):
-        self.Balance = 0
-
+        pass
     def _get_students_data(self):
         with open('/home/student88/CanteenMangmentSystem/Canteen-Management-System/Canteen-project/Student_info.json', 'r') as f:
             data = json.load(f)
@@ -85,7 +84,7 @@ class ParentPortal:
         _________________
         ID              : {data["id"]}
         Name            : {data["name"]}
-        Balance         : {self.Balance} JOD
+        Balance         : {data["Balance"]} JOD
         Max daily credit: {data["Max Daily Credit"]} JOD
         ''')
 
