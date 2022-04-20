@@ -37,7 +37,7 @@ class Operations():
         json_object = json.dumps(AllstdInfo, indent = 4)
   
         # Writing to sample.json
-        with open('/home/student88/CanteenMangmentSystem/Canteen-Management-System/Canteen-project/Student_info.json', "w") as outfile:
+        with open('Canteen-project/Student_info.json', "w") as outfile:
             outfile.write(json_object)
         def search(id):
             for p in AllstdInfo:
@@ -53,7 +53,7 @@ class ParentPortal:
     def __init__(self):
         pass
     def _get_students_data(self):
-        with open('/home/student88/CanteenMangmentSystem/Canteen-Management-System/Canteen-project/Student_info.json', 'r') as f:
+        with open('Canteen-project/Student_info.json', 'r') as f:
             data = json.load(f)
         return data
 

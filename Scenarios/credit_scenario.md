@@ -36,6 +36,6 @@ ______________
    1   1   0.1
    2   1   0.5
 ______________
-Total:      -0.6 JOD
+Total:       0.6 JOD
 Av. Balance: 7.3 JOD
 New Balance: 6.7 JOD
