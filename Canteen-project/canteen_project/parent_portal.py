@@ -28,6 +28,7 @@ class Operations:
                     return p
         data = search(stdid)
         P1.print_std_info(data)
+        return data
 
 
 
