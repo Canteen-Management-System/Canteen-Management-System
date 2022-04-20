@@ -1,0 +1,16 @@
+{
+    "headers": ["Item", "Description", "Price"],
+    "Hot food": [
+        ["Meal 1", "fresh soups with wholemeal bread rolls on the side", 2.0],
+        ["Meal 2", "pasta or lasagne with fresh tomato, bolognaise or vegetable-based sauce", 2.5]
+    ],
+    "Snacks": [
+        ["Popcorn", "type of corn that explodes from the kernel", 0.70],
+        ["Baked sweets", "made from butter, flour, eggs,  and shortening", 0.90],
+        ["Pretzels", " baked snacks that are twisted into a knot-like shape", 1.30]
+    ],
+    "Drinks": [
+        ["Apple", "Fresh juice", 0.35],
+        ["Orange", "Fresh juice", 0.35]
+    ]
+}
