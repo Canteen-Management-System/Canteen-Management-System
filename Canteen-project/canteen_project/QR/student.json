@@ -1,0 +1,24 @@
+{
+    "student": [
+      {
+        "id": 1203010,
+        "name": "Ahmad",
+        "Balance": 2.5
+      },
+      {
+        "id": 1203020,
+        "name": "Ali",
+        "Balance": 5.8
+      },
+      {
+        "id": 1203030,
+        "name": "Ali",
+        "Balance": 6.9
+      },
+      {
+        "id": 1203040,
+        "name": "Ali",
+        "Balance": 1.7
+      }
+    ]
+  }
