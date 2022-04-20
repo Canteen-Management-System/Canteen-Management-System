@@ -6,6 +6,8 @@ def test_greeting():
     actual = greeting
     expected = '''===================================
    Welcome to the Canteen System
-===================================   
+===================================
               '''
     assert actual == expected
+
+
