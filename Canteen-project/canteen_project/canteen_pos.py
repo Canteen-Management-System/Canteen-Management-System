@@ -34,7 +34,7 @@ class CanteenSystem:
             item = sub_category[item_idx]
             try:
                 if self.chosen_items[item[0]]:
-                    self.chosen_items[item[0]]["quantity"] += item_qty
+                    self.chosen_items[item[0]]["Quantity"] += item_qty
             except:
                 self.chosen_items[item[0]] = {
                     "Price": item[2], "Quantity": item_qty}
@@ -47,7 +47,10 @@ class CanteenSystem:
                 return user_input
             if user_input.lower() == 'o':
                 return user_input
-            _store_items()
+            if user_input.lower() == 'c':  
+              _store_items()
+            else:
+                print("Invalid input")
             user_input = input(TEXT)
 
     def order(self):
@@ -74,6 +77,9 @@ class CanteenSystem:
             if user_input.lower() == 'o':
                 self.payment_method()
                 return
+            else:
+                print('Invalid input')
+            user_input = input(TEXT)
 
     def recipe(self):
         df = pd.DataFrame(self.chosen_items).T
@@ -130,6 +136,7 @@ class CanteenSystem:
 
     def credit_payment(self):
         if len(self.chosen_items) == 0:
+            print("Please place your order before ")
             return self.order()
         df, total = self.recipe()
         print(df)
@@ -139,12 +146,16 @@ class CanteenSystem:
             print("The student is not exist!")
             self.payment_method()
         else:
-            student_info_table = pd.DataFrame(student_info, ['Student info']).T
-            print(student_info_table, '\n\n', '_'*40)
+            # edit the student info table 
+            # student_info_table = pd.DataFrame(student_info).T
+            # print(student_info_table, '\n\n', '_'*40)
             credit_balance = student_info['Balance']
             max_daily_credit = student_info['Max Daily Credit']
+            not_allowed_items = student_info['Not Allowed Items']
+            if self.check_not_allowed_items(not_allowed_items):
+                return self.credit_payment()
             
-            if total <= max_daily_credit or total > credit_balance:
+            if total <= max_daily_credit and total < credit_balance:
                 new_balance = credit_balance - total
                 student_info['Balance'] = new_balance
                 df.loc['Av. Balance:'] = ['', '', credit_balance]
@@ -162,7 +173,22 @@ class CanteenSystem:
                     self.cash_payment()
                 if user_input == 'q':
                     self._quiting()
-
+                    
+    def check_not_allowed_items(self,not_allowed_items):
+        exist = False
+        for item in not_allowed_items:
+            try:
+                if self.chosen_items[item]:
+                    self.chosen_items.pop(item)
+                    print(f'This {item} is not allowed to purchase by this student')
+                    exist = True
+            except:
+                continue
+        return exist
+                    
+    def _is_cart_empty(self,cart):
+        return len(cart)==0
+        
     def delete_item(self):
         def _delete_again():
             while True:
@@ -181,9 +207,13 @@ class CanteenSystem:
                     f'You have {quantity} items of {user_input}, how many item/s you want to delete: '))
                 if get_qty >= quantity or get_qty < 0:
                     self.chosen_items.pop(user_input)
+                    if self._is_cart_empty(self.chosen_items):
+                        return self.order()
                     return _delete_again()
             if quantity == 1:
                 self.chosen_items.pop(user_input)
+                if self._is_cart_empty(self.chosen_items):
+                        return self.order()
                 return _delete_again()
             self.chosen_items[user_input]['Quantity'] -= get_qty
             return _delete_again()

@@ -1,7 +1,7 @@
 import json
 import pandas as pd
-from canteen_project.canteen_pos import CanteenSystem
-from canteen_project.Store import Store
+from canteen_pos import CanteenSystem
+from Store import Store
 import datetime 
 from datetime import date
 import calendar
@@ -20,7 +20,7 @@ class Operations():
         json_object = json.dumps(AllstdInfo, indent = 4)
   
         # Writing to sample.json
-        with open('/home/student88/CanteenMangmentSystem/Canteen-Management-System/Canteen-project/Student_info.json', "w") as outfile:
+        with open('Student_info.json', "w") as outfile:
             outfile.write(json_object)
         def search(id):
             for p in AllstdInfo:
