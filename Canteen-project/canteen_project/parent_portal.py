@@ -1,14 +1,33 @@
 import json
 import pandas as pd
+from canteen_project.canteen_pos import CanteenSystem
+from canteen_project.Store import Store
 
 
 
-class Operations:
-    def __init__():
+class Operations():
+    def __init__(self):
         pass
 
-    def recharge():
-        pass
+    def recharge(stdId,RechAmount):
+        P1= ParentPortal()
+        AllstdInfo = P1._get_students_data()
+        for p in AllstdInfo:
+            if p['id'] == int(stdId):
+                p["Balance"] += float(RechAmount)
+        # Serializing json 
+        json_object = json.dumps(AllstdInfo, indent = 4)
+  
+        # Writing to sample.json
+        with open('/home/student88/CanteenMangmentSystem/Canteen-Management-System/Canteen-project/Student_info.json', "w") as outfile:
+            outfile.write(json_object)
+        def search(id):
+            for p in AllstdInfo:
+                if p['id'] == int(stdId):
+                    return p
+        data = search(stdId)
+        P1.print_std_info(data)
+        return data
 
     def max_daily_credit(stdid , maxCred):
         P1= ParentPortal()
@@ -20,7 +39,7 @@ class Operations:
         json_object = json.dumps(AllstdInfo, indent = 4)
   
         # Writing to sample.json
-        with open('Canteen-project/Student_info.json', "w") as outfile:
+        with open('Student_info.json', "w") as outfile:
             outfile.write(json_object)
         def search(id):
             for p in AllstdInfo:
@@ -36,7 +55,7 @@ class ParentPortal:
     def __init__(self):
         pass
     def _get_students_data(self):
-        with open('Canteen-project/Student_info.json', 'r') as f:
+        with open('Student_info.json', 'r') as f:
             data = json.load(f)
         return data
 
@@ -59,7 +78,8 @@ class ParentPortal:
             if oper == "Q":
                 break
             elif oper == "R":
-                Operations.recharge()
+                RechAmount = input("Enter amount of charge: ")
+                Operations.recharge(stdId,RechAmount)
             elif oper == "M":
                 maxCred = input("Enter the daily balance: ")
                 Operations.max_daily_credit(stdId , maxCred )
@@ -76,7 +96,23 @@ class ParentPortal:
         pass
 
     def not_allowed_items(self):
-        pass
+        C1 = CanteenSystem()
+        print("*  Choose the Not allowed list of Items  *")
+        while (True):
+            Category = input('Enter category Hot food (H), Snacks (S), Drinks (d), Submit (S)')
+            if Category == "S":
+                break
+            if Category.lower() == 'h':
+                table, items = C1.menu('Hot food')
+                print(table)
+                Category = C1._chosen_item(items)
+            if Category.lower() == 's':
+                table, items = C1.menu('Snacks')
+                print(table)
+                Category = C1._chosen_item(items)
+            if Category.lower() == 'd':
+                table, items = C1.menu('Drinks')
+                print(table)
 
     def print_std_info(self,data):
         print(f'''
