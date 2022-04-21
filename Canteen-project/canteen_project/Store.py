@@ -7,7 +7,7 @@ class Store():
         self.menu = "menu"
 
     def _get_menu_data(self):
-        with open('Canteen-project/menu.json', 'r') as f:
+        with open('menu.json', 'r') as f:
             menu = json.load(f)
         return menu
 

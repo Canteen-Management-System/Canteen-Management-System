@@ -116,7 +116,7 @@ Thank you for visiting
         
     def _get_students_data(self):
         try:
-            with open('Canteen-project/Student_info.json','r')as f:
+            with open('Student_info.json','r')as f:
                 data = json.load(f)
             return data 
         except FileNotFoundError:
@@ -133,7 +133,7 @@ Thank you for visiting
         old_students_info= self._get_students_data()
         old_students_info[idx]= new_student_info
         json_object = json.dumps(old_students_info, indent = 4)
-        with open('Canteen-project/Student_info.json','w')as f:
+        with open('Student_info.json','w')as f:
             f.write(json_object)
         
 
@@ -151,7 +151,7 @@ Thank you for visiting
             print(student_info_table,'\n\n','_'*40)
             credit_balance = student_info['Balance']
             max_daily_credit = student_info['Max Daily Credit']
-            if total <= max_daily_credit:
+            if total <= max_daily_credit and credit_balance >= total:
                new_balance = credit_balance - total
                student_info['Balance'] = new_balance
                df.loc['Av. Balance:'] =['', '' , credit_balance]
@@ -159,7 +159,7 @@ Thank you for visiting
                self._set_student_info(student_info,idx)
                print(df)
             else:
-                print("The total exceed the max daily credit")
+                print("The total exceed the max daily credit or the balance is not enough")
            
         
 
