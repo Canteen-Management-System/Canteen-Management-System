@@ -2,8 +2,9 @@ import json
 import pandas as pd
 from canteen_project.canteen_pos import CanteenSystem
 from canteen_project.Store import Store
-
-
+import datetime 
+from datetime import date
+import calendar
 
 class Operations():
     def __init__(self):
@@ -84,35 +85,92 @@ class ParentPortal:
                 maxCred = input("Enter the daily balance: ")
                 Operations.max_daily_credit(stdId , maxCred )
             elif oper == "N":
-                self.not_allowed_items()
+                self.not_allowed_items(stdId)
             elif oper == "B":
-                self.buy_daily_meal()
+                self.buy_daily_meal(stdId)
             else:
                 continue
 
 
         
-    def buy_daily_meal(self):
-        pass
+    def buy_daily_meal(self,stdId):
+        store = Store()
+        today = datetime.date.today()
+        curr_date = date.today()
+        day = calendar.day_name[curr_date.weekday()+1]
+        mealdate = today + datetime.timedelta(days = 1) 
+        if day == "Friday" :
+            day = "Sunday"
+            mealdate = mealdate + datetime.timedelta(days = 1) 
+            mealdate = mealdate + datetime.timedelta(days = 1)
+        if day == "Satarday": 
+            day = "Sunday"
+            mealdate = mealdate + datetime.timedelta(days = 1) 
+        print(" Choose your student daily meal  >> ")
+        print (f'* Available meals for tomorrow  {mealdate} {day}   >>')
+        table, items = store.get_items('Hot food')
+        print(table)
+        meal = input ("Select meal:  >> ")
+        print(f'Student will receive {items[int(meal)][1]} on {day} {mealdate} ')
+        price = items[int(meal)][2] * -1
+        print(f' {items[int(meal)][2]} will be detacted from his Balance ')
+        Operations.recharge(stdId, price)
+        store.online_order(stdId , meal , mealdate )
+        AllstdInfo = self._get_students_data()
+        meadapp = []
+        meadapp.append(items[int(meal)][1])
+        meadapp.append(str(mealdate))
+        for p in AllstdInfo:
+            if p['id'] == int(stdId):
+                    p["Daily meal"].append(meadapp)
+        # Serializing json 
+        json_object = json.dumps(AllstdInfo, indent = 4)
+    
+        # Writing to sample.json
+        with open('Student_info.json', "w") as outfile:
+            outfile.write(json_object)
 
-    def not_allowed_items(self):
+
+    def not_allowed_items(self,stdId):
         C1 = CanteenSystem()
-        print("*  Choose the Not allowed list of Items  *")
+        store = Store()
+        print('''
+            
+            **  Choose the Not allowed list of Items  **
+
+        ''')
         while (True):
-            Category = input('Enter category Hot food (H), Snacks (S), Drinks (d), Submit (S)')
-            if Category == "S":
-                break
+            Category = input('Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q)   ' )
             if Category.lower() == 'h':
-                table, items = C1.menu('Hot food')
+                table, items = store.get_items('Hot food')
                 print(table)
-                Category = C1._chosen_item(items)
             if Category.lower() == 's':
-                table, items = C1.menu('Snacks')
+                table, items = store.get_items('Snacks')
                 print(table)
-                Category = C1._chosen_item(items)
             if Category.lower() == 'd':
-                table, items = C1.menu('Drinks')
+                table, items =store.get_items('Drinks')
                 print(table)
+            if Category == "Q":
+                print('''
+                 you have Selected the below list as Not allowed to buy from Canteen  >>> 
+                ''')
+                for i in range (len(items)):
+                    print (f'{i+1} - {items[i][0]}')
+                break
+            NotallowedItem = input ("Enter item by number  >  ")
+            AllstdInfo = self._get_students_data()
+            for p in AllstdInfo:
+                if p['id'] == int(stdId):
+                    p["Not Allowed Items"].append(items[int(NotallowedItem)])
+        # Serializing json 
+        json_object = json.dumps(AllstdInfo, indent = 4)
+    
+        # Writing to sample.json
+        with open('Student_info.json', "w") as outfile:
+            outfile.write(json_object)
+
+            
+
 
     def print_std_info(self,data):
         print(f'''
