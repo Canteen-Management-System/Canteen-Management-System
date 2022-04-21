@@ -76,17 +76,17 @@ class ParentPortal:
         self.print_std_info(data)
         while(True):
             oper = input("Recharge (R), Set_Max-Daily-Credit (M), Not-Allowed Items (N), Buy daily meal (B), Quit (Q):")
-            if oper == "Q":
+            if oper.lower() == "Q":
                 break
-            elif oper == "R":
+            elif oper.lower() == "r":
                 RechAmount = input("Enter amount of charge: ")
                 Operations.recharge(stdId,RechAmount)
-            elif oper == "M":
+            elif oper.lower() == "m":
                 maxCred = input("Enter the daily balance: ")
                 Operations.max_daily_credit(stdId , maxCred )
-            elif oper == "N":
+            elif oper.lower() == "n":
                 self.not_allowed_items(stdId)
-            elif oper == "B":
+            elif oper.lower() == "b":
                 self.buy_daily_meal(stdId)
             else:
                 continue
@@ -103,17 +103,17 @@ class ParentPortal:
             day = "Sunday"
             mealdate = mealdate + datetime.timedelta(days = 1) 
             mealdate = mealdate + datetime.timedelta(days = 1)
-        if day == "Satarday": 
+        if day == "Saturday": 
             day = "Sunday"
             mealdate = mealdate + datetime.timedelta(days = 1) 
         print(" Choose your student daily meal  >> ")
-        print (f'* Available meals for tomorrow  {mealdate} {day}   >>')
+        print (f'* Available meals for the next Day  {mealdate} {day}   >>')
         table, items = store.get_items('Hot food')
         print(table)
         meal = input ("Select meal:  >> ")
         print(f'Student will receive {items[int(meal)][1]} on {day} {mealdate} ')
         price = items[int(meal)][2] * -1
-        print(f' {items[int(meal)][2]} will be detacted from his Balance ')
+        print(f' {items[int(meal)][2]} JD will be detacted from his Balance ')
         Operations.recharge(stdId, price)
         store.online_order(stdId , meal , mealdate )
         AllstdInfo = self._get_students_data()
@@ -139,6 +139,8 @@ class ParentPortal:
             **  Choose the Not allowed list of Items  **
 
         ''')
+        NotAllowedList = []
+        AllstdInfo = self._get_students_data()
         while (True):
             Category = input('Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q)   ' )
             if Category.lower() == 'h':
@@ -150,18 +152,20 @@ class ParentPortal:
             if Category.lower() == 'd':
                 table, items =store.get_items('Drinks')
                 print(table)
-            if Category == "Q":
-                print('''
+            if Category.lower() == "Q":
+                
+                if len(NotAllowedList) != 0 :
+                    print('''
                  you have Selected the below list as Not allowed to buy from Canteen  >>> 
                 ''')
-                for i in range (len(items)):
-                    print (f'{i+1} - {items[i][0]}')
-                break
+                    for i in range (len(NotAllowedList)):
+                        print (f'{i+1} - {NotAllowedList[i]}')
+                    break
             NotallowedItem = input ("Enter item by number  >  ")
-            AllstdInfo = self._get_students_data()
+            NotAllowedList.append(items[int(NotallowedItem)][0])
             for p in AllstdInfo:
                 if p['id'] == int(stdId):
-                    p["Not Allowed Items"].append(items[int(NotallowedItem)])
+                    p["Not Allowed Items"].append(items[int(NotallowedItem)][0])
         # Serializing json 
         json_object = json.dumps(AllstdInfo, indent = 4)
     
