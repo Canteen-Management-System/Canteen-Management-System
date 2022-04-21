@@ -2,6 +2,11 @@ import json
 import pandas as pd
 from canteen_project.canteen_pos import CanteenSystem
 from canteen_project.Store import Store
+import datetime 
+from datetime import date
+import calendar
+
+
 
 
 
@@ -86,14 +91,35 @@ class ParentPortal:
             elif oper == "N":
                 self.not_allowed_items(stdId)
             elif oper == "B":
-                self.buy_daily_meal()
+                self.buy_daily_meal(stdId)
             else:
                 continue
 
 
         
-    def buy_daily_meal(self):
-        pass
+    def buy_daily_meal(self,stdId):
+        store = Store()
+        today = datetime.date.today()
+        curr_date = date.today()
+        day = calendar.day_name[curr_date.weekday()+1]
+        tomorrow = today + datetime.timedelta(days = 1) 
+        if day == "Friday" :
+            day = "Sunday"
+            tomorrow = tomorrow + datetime.timedelta(days = 1) 
+            tomorrow = tomorrow + datetime.timedelta(days = 1)
+        if day == "Satarday": 
+            day = "Sunday"
+            tomorrow = tomorrow + datetime.timedelta(days = 1) 
+        print(" Choose your student daily meal  >> ")
+        print (f'* Available meals for tomorrow  {tomorrow} {day}   >>')
+        table, items = store.get_items('Hot food')
+        print(table)
+        meal = input ("Select meal:  >> ")
+        print(f'Student will receive {items[int(meal)][1]} on {day} {tomorrow} ')
+        price = items[int(meal)][2] * -1
+        print(f' {items[int(meal)][2]} will be detacted from his Balance ')
+        Operations.recharge(stdId, price)
+
 
     def not_allowed_items(self,stdId):
         C1 = CanteenSystem()
