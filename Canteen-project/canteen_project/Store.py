@@ -16,3 +16,6 @@ class Store():
         indics = [i for i in range(len(items[key]))]
         table = pd.DataFrame(items[key], indics, items['headers'])
         return table, items[key]
+
+    def online_order(self,stdid,meal,date):
+        pass

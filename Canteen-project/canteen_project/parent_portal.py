@@ -6,10 +6,6 @@ import datetime
 from datetime import date
 import calendar
 
-
-
-
-
 class Operations():
     def __init__(self):
         pass
@@ -102,23 +98,37 @@ class ParentPortal:
         today = datetime.date.today()
         curr_date = date.today()
         day = calendar.day_name[curr_date.weekday()+1]
-        tomorrow = today + datetime.timedelta(days = 1) 
+        mealdate = today + datetime.timedelta(days = 1) 
         if day == "Friday" :
             day = "Sunday"
-            tomorrow = tomorrow + datetime.timedelta(days = 1) 
-            tomorrow = tomorrow + datetime.timedelta(days = 1)
+            mealdate = mealdate + datetime.timedelta(days = 1) 
+            mealdate = mealdate + datetime.timedelta(days = 1)
         if day == "Satarday": 
             day = "Sunday"
-            tomorrow = tomorrow + datetime.timedelta(days = 1) 
+            mealdate = mealdate + datetime.timedelta(days = 1) 
         print(" Choose your student daily meal  >> ")
-        print (f'* Available meals for tomorrow  {tomorrow} {day}   >>')
+        print (f'* Available meals for tomorrow  {mealdate} {day}   >>')
         table, items = store.get_items('Hot food')
         print(table)
         meal = input ("Select meal:  >> ")
-        print(f'Student will receive {items[int(meal)][1]} on {day} {tomorrow} ')
+        print(f'Student will receive {items[int(meal)][1]} on {day} {mealdate} ')
         price = items[int(meal)][2] * -1
         print(f' {items[int(meal)][2]} will be detacted from his Balance ')
         Operations.recharge(stdId, price)
+        store.online_order(stdId , meal , mealdate )
+        AllstdInfo = self._get_students_data()
+        meadapp = []
+        meadapp.append(items[int(meal)][1])
+        meadapp.append(str(mealdate))
+        for p in AllstdInfo:
+            if p['id'] == int(stdId):
+                    p["Daily meal"].append(meadapp)
+        # Serializing json 
+        json_object = json.dumps(AllstdInfo, indent = 4)
+    
+        # Writing to sample.json
+        with open('Student_info.json', "w") as outfile:
+            outfile.write(json_object)
 
 
     def not_allowed_items(self,stdId):
