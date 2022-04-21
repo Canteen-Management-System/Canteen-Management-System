@@ -1,4 +1,3 @@
-from hashlib import sha1
 import pandas as pd
 import json
 
@@ -106,7 +105,9 @@ class CanteenSystem:
 
     def _get_students_data(self):
         try:
+
             with open('Student_info.json', 'r')as f:
+
                 data = json.load(f)
             return data
         except FileNotFoundError:
@@ -118,6 +119,7 @@ class CanteenSystem:
             if student['id'] == id:
                 return student, idx
         return None
+
 
     def _set_student_info(self, new_student_info, idx):
         old_students_info = self._get_students_data()
@@ -141,6 +143,7 @@ class CanteenSystem:
             print(student_info_table, '\n\n', '_'*40)
             credit_balance = student_info['Balance']
             max_daily_credit = student_info['Max Daily Credit']
+            
             if total <= max_daily_credit or total > credit_balance:
                 new_balance = credit_balance - total
                 student_info['Balance'] = new_balance
@@ -194,6 +197,7 @@ class CanteenSystem:
 Thank you for visiting
 ===============================================================
 """)
+
 
 
 if __name__ == '__main__':
