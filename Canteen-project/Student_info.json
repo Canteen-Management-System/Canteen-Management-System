@@ -4,7 +4,7 @@
         "name": "Ahmad",
         "Balance": 2.0,
         "Max Daily Credit": 2.0,
-        "Not Allowed Items": null,
+        "Not Allowed Items": [],
         "Daily meal": null
     },
     {
@@ -12,7 +12,38 @@
         "name": "Ali",
         "Balance": 622.55,
         "Max Daily Credit": 2.3,
-        "Not Allowed Items": null,
+        "Not Allowed Items": [
+            [
+                "Baked sweets",
+                "made from butter, flour, eggs,  and shortening",
+                0.9
+            ],
+            [
+                "Apple",
+                "Fresh juice",
+                0.35
+            ],
+            [
+                "Orange",
+                "Fresh juice",
+                0.35
+            ],
+            [
+                "Orange",
+                "Fresh juice",
+                0.35
+            ],
+            [
+                "Orange",
+                "Fresh juice",
+                0.35
+            ],
+            [
+                "Baked sweets",
+                "made from butter, flour, eggs,  and shortening",
+                0.9
+            ]
+        ],
         "Daily meal": null
     }
 ]

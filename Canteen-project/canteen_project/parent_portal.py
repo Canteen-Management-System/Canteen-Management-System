@@ -84,7 +84,7 @@ class ParentPortal:
                 maxCred = input("Enter the daily balance: ")
                 Operations.max_daily_credit(stdId , maxCred )
             elif oper == "N":
-                self.not_allowed_items()
+                self.not_allowed_items(stdId)
             elif oper == "B":
                 self.buy_daily_meal()
             else:
@@ -95,24 +95,46 @@ class ParentPortal:
     def buy_daily_meal(self):
         pass
 
-    def not_allowed_items(self):
+    def not_allowed_items(self,stdId):
         C1 = CanteenSystem()
-        print("*  Choose the Not allowed list of Items  *")
+        store = Store()
+        print('''
+            
+            **  Choose the Not allowed list of Items  **
+
+        ''')
         while (True):
-            Category = input('Enter category Hot food (H), Snacks (S), Drinks (d), Submit (S)')
-            if Category == "S":
-                break
+            Category = input('Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q)   ' )
             if Category.lower() == 'h':
-                table, items = C1.menu('Hot food')
+                table, items = store.get_items('Hot food')
                 print(table)
-                Category = C1._chosen_item(items)
             if Category.lower() == 's':
-                table, items = C1.menu('Snacks')
+                table, items = store.get_items('Snacks')
                 print(table)
-                Category = C1._chosen_item(items)
             if Category.lower() == 'd':
-                table, items = C1.menu('Drinks')
+                table, items =store.get_items('Drinks')
                 print(table)
+            if Category == "Q":
+                print('''
+                 you have Selected the below list as Not allowed to buy from Canteen  >>> 
+                ''')
+                for i in range (len(items)):
+                    print (f'{i+1} - {items[i][0]}')
+                break
+            NotallowedItem = input ("Enter item by number  >  ")
+            AllstdInfo = self._get_students_data()
+            for p in AllstdInfo:
+                if p['id'] == int(stdId):
+                    p["Not Allowed Items"].append(items[int(NotallowedItem)])
+        # Serializing json 
+        json_object = json.dumps(AllstdInfo, indent = 4)
+    
+        # Writing to sample.json
+        with open('Student_info.json', "w") as outfile:
+            outfile.write(json_object)
+
+            
+
 
     def print_std_info(self,data):
         print(f'''
