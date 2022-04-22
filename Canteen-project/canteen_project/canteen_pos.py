@@ -5,6 +5,8 @@ import json
 class CanteenSystem:
     def __init__(self):
         self.chosen_items = {}
+        self.student_id = None
+        self.students_data = None
 
     @staticmethod
     def greeting():
@@ -32,6 +34,11 @@ class CanteenSystem:
                 item_idx = input(TEXT_ITEM_IDX)
             item_qty = int(input(TEXT_ITEM_QTY))
             item = sub_category[item_idx]
+            # student_info = self._get_students_data()
+            # not_allowed_items= student_info['not_allowed_items']
+            # not_allowed_items = sub_category[item_idx][0]
+            # if self.is_student:
+                
             try:
                 if self.chosen_items[item[0]]:
                     self.chosen_items[item[0]]["Quantity"] += item_qty
@@ -54,6 +61,15 @@ class CanteenSystem:
             user_input = input(TEXT)
 
     def order(self):
+        FIRST_TEXT = 'Student(T),  Not a student(N): '
+     
+        customer_type = input(FIRST_TEXT).lower()
+        if customer_type == 't':
+            self.student_id = int(input('Enter Student ID'))
+            if self._id_search(self.student_id):
+                self.student_data, idx =self._id_search(self.student_id)
+                   
+        
         TEXT = 'Enter category Hot food (H), Snacks (S), Drinks (d), Quit (Q): '
         user_input = input(TEXT)
         while True:
@@ -75,8 +91,11 @@ class CanteenSystem:
             if user_input.lower() == 'g':
                 return self.order()
             if user_input.lower() == 'o':
-                self.payment_method()
-                return
+                if customer_type == 't':
+                   return self.credit_payment()
+                if customer_type == 'n':
+                   return self.cash_payment()
+                
             else:
                 print('Invalid input')
             user_input = input(TEXT)
@@ -152,9 +171,10 @@ class CanteenSystem:
             credit_balance = student_info['Balance']
             max_daily_credit = student_info['Max Daily Credit']
             not_allowed_items = student_info['Not Allowed Items']
-            if self.check_not_allowed_items(not_allowed_items):
-                return self.credit_payment()
-            
+            # if self.check_not_allowed_items(not_allowed_items):
+            #     df, total = self.recipe()
+            #     self._quiting()
+            #     return self.order()
             if total <= max_daily_credit and total < credit_balance:
                 new_balance = credit_balance - total
                 student_info['Balance'] = new_balance
