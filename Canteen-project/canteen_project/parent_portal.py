@@ -5,12 +5,25 @@ from canteen_project.Store import Store
 import datetime 
 from datetime import date
 import calendar
+import termcolor
+import os
+os.system('color')
 
 class Operations():
+    '''
+    Class Operation with Two methods to perform the Basic Operation related to the Balance 
+    1- Recharge 
+    2- Max deaily Credit .
+    '''
     def __init__(self):
         pass
 
     def recharge(stdId,RechAmount):
+        '''
+        Recharge method : add certain amount to the Balance
+        input : student ID , Recharge Amount 
+        output : the updated students infromation with new Balance  
+        '''
         P1= ParentPortal()
         AllstdInfo = P1._get_students_data()
         for p in AllstdInfo:
@@ -30,7 +43,13 @@ class Operations():
         P1.print_std_info(data)
         return data
 
+
     def max_daily_credit(stdid , maxCred):
+        '''
+        Set the Maximum daily allowed credit which can be used by a students for any day 
+        input : student ID , maimum Credit  Amount 
+        output : the updated students infromation with new max credit amount  
+        '''
         P1= ParentPortal()
         AllstdInfo = P1._get_students_data()
         for p in AllstdInfo:
@@ -53,19 +72,37 @@ class Operations():
 
 
 class ParentPortal:
+    '''
+    class Prent Portal which will be used by parent to fully mange the student in the Canteen mangment system 
+    methods : 
+    1- get students data 
+    2- Canteen Portal .
+    3- buy daily meal for online dailvery from the kitchen 
+    4- Not allowed items that the student cant buy from the Canteen .
+    '''
     def __init__(self):
         pass
     def _get_students_data(self):
+        '''
+        method :  get studnt data 
+        input : path of the Jeson file  
+        output : read and return the whole file data 
+        '''
         with open('Student_info.json', 'r') as f:
             data = json.load(f)
         return data
 
     def canteen_portal(self):
-        print('''
-
+        '''
+        main methods in the class which used to connect all methods required to 
+        operate the portal and give the parent full control .
+        no argument , not returning any data , only perform Operation .
+        '''
+        print( termcolor.colored('''
+        ****************************************************************
         ************  Welcome to Canteen Parent Portal *****************
-        
-        ''')
+        ****************************************************************
+        ''' , "yellow" ))
         stdId = input(" Enter the Student ID:  ")
         AllstdInfo = self._get_students_data()
         def search(id):
@@ -76,7 +113,7 @@ class ParentPortal:
         self.print_std_info(data)
         while(True):
             oper = input("Recharge (R), Set_Max-Daily-Credit (M), Not-Allowed Items (N), Buy daily meal (B), Quit (Q):")
-            if oper.lower() == "Q":
+            if oper.lower() == "q":
                 break
             elif oper.lower() == "r":
                 RechAmount = input("Enter amount of charge: ")
@@ -94,6 +131,13 @@ class ParentPortal:
 
         
     def buy_daily_meal(self,stdId):
+        '''
+        Buy Daily Meal method used to perform the online purchese from parent 
+        the price will be deduct from the Balance direct , the parent can order the meal 
+        one day inadvance , the meal name , studentID , and the date will be sent to the 
+        school kitchen to prepare the meal .
+        input : student ID 
+        '''
         store = Store()
         today = datetime.date.today()
         curr_date = date.today()
@@ -129,9 +173,15 @@ class ParentPortal:
         # Writing to sample.json
         with open('Student_info.json', "w") as outfile:
             outfile.write(json_object)
+        return stdId , meal , mealdate
 
 
     def not_allowed_items(self,stdId):
+        '''
+        methods used to help the parent select list of not allowed items to be added to the student account 
+        input : student ID 
+        output : list of the name of not allowed meals 
+        '''
         C1 = CanteenSystem()
         store = Store()
         print('''
@@ -152,7 +202,7 @@ class ParentPortal:
             if Category.lower() == 'd':
                 table, items =store.get_items('Drinks')
                 print(table)
-            if Category.lower() == "Q":
+            if Category.lower() == "q":
                 
                 if len(NotAllowedList) != 0 :
                     print('''
@@ -172,11 +222,15 @@ class ParentPortal:
         # Writing to sample.json
         with open('Student_info.json', "w") as outfile:
             outfile.write(json_object)
+        return NotAllowedList
 
             
 
 
     def print_std_info(self,data):
+        '''
+        print function used to print the basic student information 
+        '''
         print(f'''
         Student Info
         _________________
