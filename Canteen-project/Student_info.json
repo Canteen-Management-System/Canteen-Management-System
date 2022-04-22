@@ -10,9 +10,18 @@
     {
         "id": 1,
         "name": "Ali",
-        "Balance": 0,
-        "Max Daily Credit": 0,
-        "Not Allowed Items": [],
-        "Daily meal": []
+        "Balance": 147.5,
+        "Max Daily Credit": 2.3,
+        "Not Allowed Items": [
+            "Meal 1",
+            "Popcorn",
+            "Apple"
+        ],
+        "Daily meal": [
+            [
+                "pasta or lasagne with fresh tomato, bolognaise or vegetable-based sauce",
+                "2022-04-24"
+            ]
+        ]
     }
 ]

@@ -103,7 +103,7 @@ class ParentPortal:
         ************  Welcome to Canteen Parent Portal *****************
         ****************************************************************
         ''' , "yellow" ))
-        stdId = input(" Enter the Student ID:  ")
+        stdId = input(termcolor.colored (" Enter the Student ID:  >>   ", "magenta"))
         AllstdInfo = self._get_students_data()
         def search(id):
             for p in AllstdInfo:
@@ -111,15 +111,16 @@ class ParentPortal:
                     return p
         data = search(stdId)
         self.print_std_info(data)
+        print(termcolor.colored("Type In the letter between parentheses to select the option .. \n","magenta"))
         while(True):
-            oper = input("Recharge (R), Set_Max-Daily-Credit (M), Not-Allowed Items (N), Buy daily meal (B), Quit (Q):")
+            oper = input(termcolor.colored ("Recharge (R), Set_Max-Daily-Credit (M), Not-Allowed Items (N), Buy daily meal (B), Quit (Q):  >>  ", "magenta"))
             if oper.lower() == "q":
                 break
             elif oper.lower() == "r":
-                RechAmount = input("Enter amount of charge: ")
+                RechAmount = input(termcolor.colored("Enter amount of charge:   >> ","magenta"))
                 Operations.recharge(stdId,RechAmount)
             elif oper.lower() == "m":
-                maxCred = input("Enter the daily balance: ")
+                maxCred = input(termcolor.colored("Enter the daily balance:  >> ","magenta"))
                 Operations.max_daily_credit(stdId , maxCred )
             elif oper.lower() == "n":
                 self.not_allowed_items(stdId)
@@ -154,7 +155,7 @@ class ParentPortal:
         print (f'* Available meals for the next Day  {mealdate} {day}   >>')
         table, items = store.get_items('Hot food')
         print(table)
-        meal = input ("Select meal:  >> ")
+        meal = input (termcolor.colored ("Select meal:  >> " , "magenta"))
         print(f'Student will receive {items[int(meal)][1]} on {day} {mealdate} ')
         price = items[int(meal)][2] * -1
         print(f' {items[int(meal)][2]} JD will be detacted from his Balance ')
@@ -184,34 +185,35 @@ class ParentPortal:
         '''
         C1 = CanteenSystem()
         store = Store()
-        print('''
-            
-            **  Choose the Not allowed list of Items  **
-
-        ''')
+        print(termcolor.colored ('''
+        Select the Category then you will see the list of the Available items
+        select which items you will Not allow the student to buy from Canteen
+        ''' , "magenta"))
         NotAllowedList = []
         AllstdInfo = self._get_students_data()
         while (True):
-            Category = input('Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q)   ' )
+            Category = input(termcolor.colored ('Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q) >>   ', "magenta" ))
             if Category.lower() == 'h':
                 table, items = store.get_items('Hot food')
                 print(table)
-            if Category.lower() == 's':
+            elif Category.lower() == 's':
                 table, items = store.get_items('Snacks')
                 print(table)
-            if Category.lower() == 'd':
+            elif Category.lower() == 'd':
                 table, items =store.get_items('Drinks')
                 print(table)
-            if Category.lower() == "q":
+            elif Category.lower() == "q":
                 
                 if len(NotAllowedList) != 0 :
-                    print('''
+                    print(termcolor.colored ('''
                  you have Selected the below list as Not allowed to buy from Canteen  >>> 
-                ''')
+                ''' , "magenta"))
                     for i in range (len(NotAllowedList)):
                         print (f'{i+1} - {NotAllowedList[i]}')
                     break
-            NotallowedItem = input ("Enter item by number  >  ")
+            else:
+                continue
+            NotallowedItem = input (termcolor.colored ("Enter item by number  >>  " , "magenta"))
             NotAllowedList.append(items[int(NotallowedItem)][0])
             for p in AllstdInfo:
                 if p['id'] == int(stdId):
