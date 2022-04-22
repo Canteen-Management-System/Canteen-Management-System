@@ -2,37 +2,17 @@
     {
         "id": 2022458,
         "name": "Ahmad",
-        "Balance": -0.5,
-        "Max Daily Credit": 2.0,
+        "Balance": 200.0,
+        "Max Daily Credit": 0,
         "Not Allowed Items": [],
         "Daily meal": []
     },
     {
         "id": 1,
         "name": "Ali",
-        "Balance": 338.0,
-        "Max Daily Credit": 2.3,
-        "Not Allowed Items": [
-            "Meal 1",
-            "Popcorn",
-            "Baked sweets",
-            "Meal 1",
-            "Baked sweets",
-            "Orange"
-        ],
-        "Daily meal": [
-            [
-                "pasta or lasagne with fresh tomato, bolognaise or vegetable-based sauce",
-                "2022-04-23"
-            ],
-            [
-                "fresh soups with wholemeal bread rolls on the side",
-                "2022-04-24"
-            ],
-            [
-                "pasta or lasagne with fresh tomato, bolognaise or vegetable-based sauce",
-                "2022-04-24"
-            ]
-        ]
+        "Balance": 0,
+        "Max Daily Credit": 0,
+        "Not Allowed Items": [],
+        "Daily meal": []
     }
 ]
