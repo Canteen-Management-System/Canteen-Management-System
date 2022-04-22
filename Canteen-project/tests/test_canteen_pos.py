@@ -9,5 +9,3 @@ def test_greeting():
 ===================================
               '''
     assert actual == expected
-
-

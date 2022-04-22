@@ -15,4 +15,8 @@ class Store():
         items = self._get_menu_data()
         indics = [i for i in range(len(items[key]))]
         table = pd.DataFrame(items[key], indics, items['headers'])
-        return table, items[key]
+        return table.to_string(index=True), items[key]
+
+
+if __name__ == '__main__':
+    import pandas as pd

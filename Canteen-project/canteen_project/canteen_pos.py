@@ -1,6 +1,6 @@
-from hashlib import sha1
-import pandas as pd
 import json
+from .Store import Store
+import pandas as pd
 
 
 class CanteenSystem:
@@ -32,10 +32,10 @@ class CanteenSystem:
             while item_idx > len(sub_category)-1 or item_idx < 0:
                 item_idx = input(TEXT_ITEM_IDX)
             item_qty = int(input(TEXT_ITEM_QTY))
-            item = sub_category[item_idx]
+            item = sub_category[item_idx]  # ["Apple", "Fresh juice", 0.35]
             try:
                 if self.chosen_items[item[0]]:
-                    self.chosen_items[item[0]]["quantity"] += item_qty
+                    self.chosen_items[item[0]]["Quantity"] += item_qty
             except:
                 self.chosen_items[item[0]] = {
                     "Price": item[2], "Quantity": item_qty}
@@ -97,12 +97,13 @@ class CanteenSystem:
 
     def cash_payment(self):
         df, total = self.recipe()
-        print(df, '\n')
+
+        print(df.to_string(index=True))
         cash = float(input('Cash amount : '))
         change = cash - total
         df.loc['Cash'] = ['', '', cash]
         df.loc['Change'] = ['', '', change]
-        print(df)
+        print(df.to_string(index=True))
 
     def _get_students_data(self):
         try:
@@ -130,7 +131,7 @@ class CanteenSystem:
         if len(self.chosen_items) == 0:
             return self.order()
         df, total = self.recipe()
-        print(df)
+        print(df.to_string(index=True))
         student_id = int(input('Enter student ID: '))
         student_info, idx = self._id_search(student_id)
         if student_info == None:
@@ -147,7 +148,7 @@ class CanteenSystem:
                 df.loc['Av. Balance:'] = ['', '', credit_balance]
                 df.loc['New Balance:'] = ['', '', new_balance]
                 self._set_student_info(student_info, idx)
-                print(df)
+                print(df.to_string(index=True))
             else:
                 print(
                     "The total exceed the max daily credit or your balance is not enough!")
@@ -172,16 +173,17 @@ class CanteenSystem:
 
         user_input = input('Enter the name of the item to delete: ')
         try:
-            quantity = self.chosen_items[user_input]['Quantity']
-            if quantity > 1:
+            quantity = self.chosen_items[user_input]['Quantity']  # 3 Meal 1
+            if quantity > 1:  # 3 >1
                 get_qty = int(input(
-                    f'You have {quantity} items of {user_input}, how many item/s you want to delete: '))
+                    f'You have {quantity} items of {user_input}, how many item/s you want to delete: '))  # 3
                 if get_qty >= quantity or get_qty < 0:
                     self.chosen_items.pop(user_input)
                     return _delete_again()
             if quantity == 1:
                 self.chosen_items.pop(user_input)
                 return _delete_again()
+
             self.chosen_items[user_input]['Quantity'] -= get_qty
             return _delete_again()
         except:
@@ -197,7 +199,38 @@ Thank you for visiting
 
 
 if __name__ == '__main__':
+    import pandas as pd
     from Store import Store
     CanteenSystem.greeting()
     canteen = CanteenSystem()
     canteen.order()
+    # s = Store()
+    # table, items = s.get_items('Hot food')
+    # print(type(table))
+
+    def check_not_allowed_items():
+        not_allowed = ["Meal 1", "Popcorn", "Apple"]
+        cart = {
+            'Meal 1': {
+                'price': 2.0,
+                'quantity': 3
+            },
+            'Popcorn': {
+                'price': 2.0,
+                'quantity': 3
+            },
+            'Meal 3': {
+                'price': 2.0,
+                'quantity': 3
+            }
+        }
+        cart_keys = cart.keys()
+        for item in not_allowed:
+            try:
+                if cart[item]:
+                    cart.pop(item)
+            except:
+                continue
+        print(cart)
+
+    # check_not_allowed_items()
