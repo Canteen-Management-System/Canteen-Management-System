@@ -1,12 +1,17 @@
 import json
 import pandas as pd
-from canteen_project.canteen_pos import CanteenSystem
-from canteen_project.Store import Store
+from canteen_pos import CanteenSystem
+from Store import Store
 import datetime 
 from datetime import date
 import calendar
 import termcolor
 import os
+import csv
+import matplotlib.pyplot as plt
+from IPython.display import display, Image
+
+
 os.system('color')
 
 class Operations():
@@ -88,7 +93,7 @@ class ParentPortal:
         input : path of the Jeson file  
         output : read and return the whole file data 
         '''
-        with open('Student_info.json', 'r') as f:
+        with open('/home/student88/CanteenMangmentSystem/Canteen-Management-System/Canteen-project/Student_info.json', 'r') as f:
             data = json.load(f)
         return data
 
@@ -111,11 +116,19 @@ class ParentPortal:
                     return p
         data = search(stdId)
         self.print_std_info(data)
-        print(termcolor.colored("Type In the letter between parentheses to select the option .. \n","magenta"))
         while(True):
-            oper = input(termcolor.colored ("Recharge (R), Set_Max-Daily-Credit (M), Not-Allowed Items (N), Buy daily meal (B), Quit (Q):  >>  ", "magenta"))
+            oper = input(termcolor.colored ('''
+            Type In the letter between parentheses to select the option .. \n
+            Recharge (R),
+            Set_Max-Daily-Credit (M),
+            Not-Allowed Items (N),
+            Buy daily meal (B),
+            Reports and Analysis (R)
+            Foods word anlysis (F)
+            Quit (Q):  >>  ''', "magenta"))
             if oper.lower() == "q":
-                break
+               print(termcolor.colored("\n Thank you for using Canteen System , We Care ! \n","magenta"))
+               break
             elif oper.lower() == "r":
                 RechAmount = input(termcolor.colored("Enter amount of charge:   >> ","magenta"))
                 Operations.recharge(stdId,RechAmount)
@@ -126,8 +139,62 @@ class ParentPortal:
                 self.not_allowed_items(stdId)
             elif oper.lower() == "b":
                 self.buy_daily_meal(stdId)
+            elif oper.lower() == "r":
+                pass
+            elif oper.lower() == "f":
+                self.data_analysis()
             else:
                 continue
+
+
+    def data_analysis(self):
+        print(termcolor.colored(''' \n check out some Anlysis for more than 300 foods each with the amount of Calories,
+                Fats, Proteins, Saturated Fats, Carbohydrates, Fibers labelled for each food. 
+                Also, the foods are also categorised into various groups like Desserts, Vegetables, Fruits etc. ! \n''',"magenta"))
+        x = []
+        y = []
+        
+        with open('nutrients_csvfile.csv','r') as csvfile:
+            plots = csv.reader(csvfile, delimiter = ',')
+            
+            for row in plots:
+                x.append(row[0])
+                y.append(row[3])
+  
+        plt.bar(x, y, color = 'g', width = 0.72, label = "food")
+        plt.xlabel('Food')
+        plt.ylabel('Calories')
+        plt.title('Calories for diff food ')
+        plt.legend()
+        plt.plot(x, y)
+
+        plt.show()
+        plt.savefig('FoodVSCalories.png')
+        display(Image(filename='FoodVSCalories.png'))
+
+        #####################********************************8############################
+        W = []
+        Z = []
+        with open('nutrients_csvfile.csv','r') as csvfile:
+            plots = csv.reader(csvfile, delimiter = ',')
+            for row in plots:
+                W.append(row[0])
+                Z.append(row[4])
+            
+        plt.plot(W, Z, color = 'g', linestyle = 'dashed',
+                marker = 'o',label = "Protein")
+        
+        plt.xticks(rotation = 25)
+        plt.xlabel('Food')
+        plt.ylabel('Protein')
+        plt.title('Protein for diff food', fontsize = 20)
+        plt.grid()
+        plt.legend()
+        plt.show()
+        plt.savefig('FoodVSProtein.png')
+        display(Image(filename='FoodVSProtein.png'))
+
+
 
 
         
