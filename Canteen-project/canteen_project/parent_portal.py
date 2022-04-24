@@ -218,12 +218,10 @@ class ParentPortal:
         store = Store()
         today = datetime.date.today()
         curr_date = date.today()
-        print(curr_date.weekday())
         index = curr_date.weekday()
-        if index == 6:
-            index == 0
+        if index == 6 :
+            index = 0
         day = calendar.day_name[index]
-        print(day)
         mealdate = today + datetime.timedelta(days = 1) 
         if day == "Friday" :
             day = "Sunday"
