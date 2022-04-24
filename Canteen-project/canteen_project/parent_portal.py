@@ -1,4 +1,5 @@
 import json
+from textwrap import indent
 import pandas as pd
 from canteen_pos import CanteenSystem
 from Store import Store
@@ -10,6 +11,10 @@ import os
 import csv
 import matplotlib.pyplot as plt
 from IPython.display import display, Image
+import matplotlib.image as mpimg
+
+
+
 
 
 os.system('color')
@@ -148,13 +153,14 @@ class ParentPortal:
 
 
     def data_analysis(self):
+           
         print(termcolor.colored(''' \n check out some Anlysis for more than 300 foods each with the amount of Calories,
                 Fats, Proteins, Saturated Fats, Carbohydrates, Fibers labelled for each food. 
                 Also, the foods are also categorised into various groups like Desserts, Vegetables, Fruits etc. ! \n''',"magenta"))
         x = []
         y = []
         
-        with open('nutrients_csvfile.csv','r') as csvfile:
+        with open('canteen_project/nutrients_csvfile.csv','r') as csvfile:
             plots = csv.reader(csvfile, delimiter = ',')
             
             for row in plots:
@@ -168,14 +174,14 @@ class ParentPortal:
         plt.legend()
         plt.plot(x, y)
 
-        plt.show()
+        plt.show(block=True)
         plt.savefig('FoodVSCalories.png')
         display(Image(filename='FoodVSCalories.png'))
 
         #####################********************************8############################
         W = []
         Z = []
-        with open('nutrients_csvfile.csv','r') as csvfile:
+        with open('canteen_project/nutrients_csvfile.csv','r') as csvfile:
             plots = csv.reader(csvfile, delimiter = ',')
             for row in plots:
                 W.append(row[0])
@@ -192,7 +198,12 @@ class ParentPortal:
         plt.legend()
         plt.show()
         plt.savefig('FoodVSProtein.png')
-        display(Image(filename='FoodVSProtein.png'))
+        return display(Image(filename='FoodVSProtein.png'))
+        img = mpimg.imread('FoodVSProtein.png')
+        imgplot = plt.imshow(img)
+        plt.show()
+
+
 
 
 
@@ -209,7 +220,12 @@ class ParentPortal:
         store = Store()
         today = datetime.date.today()
         curr_date = date.today()
-        day = calendar.day_name[curr_date.weekday()+1]
+        print(curr_date.weekday())
+        index = curr_date.weekday()
+        if index == 6:
+            index == 0
+        day = calendar.day_name[index]
+        print(day)
         mealdate = today + datetime.timedelta(days = 1) 
         if day == "Friday" :
             day = "Sunday"
