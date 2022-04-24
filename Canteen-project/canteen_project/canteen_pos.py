@@ -2,6 +2,7 @@ import pandas as pd
 from canteen_project.helper_methods import HelperMethods
 import termcolor
 from canteen_project.Store import Store
+from strip_ansi import strip_ansi
 
 PROMPTS = (
     'Enter your item: ',
@@ -46,7 +47,8 @@ class CanteenSystem:
     def _get_menu(self, key):
         store = Store()
         table, items = store.get_items(key)
-        termcolor.cprint(table, 'blue')
+        print(table)
+        # termcolor.cprint(table, 'blue')
         return items
 
     def _store_items(self, sub_category):
@@ -101,7 +103,7 @@ class CanteenSystem:
         df['Amount'] = df["Price"].multiply(df["Quantity"], axis="index")
         total_row = df.sum(axis=0)
         total_row = ['', total_row[1], total_row[2]]
-        df.loc[''] = ['-------', '------', '-------']
+        df.loc[''] = ['-------', '-------', '-------']
         df.loc['Total'] = total_row
         return df, total_row[2]
 
@@ -210,9 +212,8 @@ Thank you for visiting
             if category == 'd':
                 self._select_from_category('Drinks')
 
-        user_action = get_user_category  # o
+        user_action = get_user_category
         while True:
-
             if user_action in ['s', 'h', 'd']:
                 get_user_category = user_action
                 _categories(get_user_category)

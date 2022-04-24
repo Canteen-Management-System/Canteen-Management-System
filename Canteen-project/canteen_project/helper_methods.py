@@ -1,5 +1,6 @@
 import json
 import termcolor
+import re
 
 
 class HelperMethods:
@@ -63,3 +64,8 @@ class HelperMethods:
         json_object = json.dumps(students_data, indent=4)
         with open('Student_info.json', 'w')as f:
             f.write(json_object)
+
+    @staticmethod
+    def escape_ansi(line):
+        ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+        return ansi_escape.sub('', line)

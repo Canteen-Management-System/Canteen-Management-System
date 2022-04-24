@@ -1,7 +1,7 @@
-from ast import arg
 import builtins
 from canteen_project.canteen_pos import CanteenSystem
 import re
+from canteen_project.helper_methods import HelperMethods as hm
 
 
 class Flo:
@@ -35,8 +35,8 @@ class Flo:
                         self.responses.append(response)
 
     def escape_ansi(self, line):
-        ansi_escape = re.compile(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]')
-        return ansi_escape.sub('', line)
+        pattern = r"((\\\\|\\[x][1][b])(\[[0-9]+[a-z]))"
+        return re.sub(pattern, '', line)
 
     @staticmethod
     def test(path):
@@ -59,24 +59,44 @@ class Flo:
 
         return response
 
+    def _decolorize_text(self, lines):
+        self.old_print(lines, '\n\n')
+        for i, item in enumerate(lines):
+            if item.startswith('(\''):
+                table_cha = re.compile(r"(\(')|(',\))")
+                new_text = table_cha.sub('', item)
+                uncolorized_text = self.escape_ansi(new_text)
+                n = self._separate_text(uncolorized_text)
+                n = [i for i in n if i != '']
+                lines[i] = n
+                self.old_print(lines)
+                return n
+
+    def _separate_text(self, text):
+        return text.split("\\n")
+
     def _exit(self):
 
         with open(self.path) as file:
 
             print_lines = self.prints.strip().split("\n")
 
+            # self._decolorize_text(print_lines)
+
             file_lines = file.read().strip().split("\n")
 
             pairs = zip(print_lines, file_lines)
 
             for i, pair in enumerate(pairs):
-
                 actual, expected = pair
-                _actual = self.escape_ansi(actual)
-                self.old_input(_actual)
+
                 assert (
                     actual == expected
-                ), f"line {i + 1} - actual:{_actual} - expected:{expected}"
+                ), f"line {i + 1} - actual:{actual} - expected:{expected}"
 
         builtins.print = self.old_print
         builtins.input = self.old_input
+
+
+if __name__ == "__main__":
+    Flo.test("/Users/noureddeinal-abassi/Desktop/401-ASAC/mid-term-project/Canteen-Management-System/Canteen-project/tests/flow/cash.sim.txt")

@@ -1,11 +1,11 @@
 Student(T),  Not a student(N): n
 Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): h
-     Item                                        Description  Price 
-0  Meal 1  fresh soups with wholemeal bread rolls on the ...    2.0 
-1  Meal 2  pasta or lasagne with fresh tomato, bolognaise...    2.5 
-Enter your item: 0 
-Enter quantity: 1 
-Choose another item (C), Check out (O), back to categories (G) , Quit (Q): o 
+(     Item                                        Description  Price
+0  Meal 1  fresh soups with wholemeal bread rolls on the ...    2.0
+1  Meal 2  pasta or lasagne with fresh tomato, bolognaise...    2.5,)
+Enter your item: 0
+Enter quantity: 1
+Choose another item (C), Check out (O), back to categories (G) , Quit (Q): o
 
           Price Quantity   Amount
 Meal 1      2.0      1.0      2.0
