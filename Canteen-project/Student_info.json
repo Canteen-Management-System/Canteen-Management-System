@@ -18,39 +18,12 @@
     {
         "id": 1,
         "name": "Ali",
-        "Balance": 580.55,
+        "Balance": 147.5,
         "Max Daily Credit": 2.3,
         "Not Allowed Items": [
-            [
-                "Baked sweets",
-                "made from butter, flour, eggs,  and shortening",
-                0.9
-            ],
-            [
-                "Apple",
-                "Fresh juice",
-                0.35
-            ],
-            [
-                "Orange",
-                "Fresh juice",
-                0.35
-            ],
-            [
-                "Orange",
-                "Fresh juice",
-                0.35
-            ],
-            [
-                "Orange",
-                "Fresh juice",
-                0.35
-            ],
-            [
-                "Baked sweets",
-                "made from butter, flour, eggs,  and shortening",
-                0.9
-            ]
+            "Meal 1",
+            "Popcorn",
+            "Apple"
         ],
         "Daily meal": [
             [
