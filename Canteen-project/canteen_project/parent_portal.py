@@ -12,6 +12,8 @@ import csv
 import matplotlib.pyplot as plt
 from IPython.display import display, Image
 import matplotlib.image as mpimg
+from mdutils.mdutils import MdUtils
+from mdutils import Html
 
 
 
@@ -154,9 +156,6 @@ class ParentPortal:
 
     def data_analysis(self):
            
-        print(termcolor.colored(''' \n check out some Anlysis for more than 300 foods each with the amount of Calories,
-                Fats, Proteins, Saturated Fats, Carbohydrates, Fibers labelled for each food. 
-                Also, the foods are also categorised into various groups like Desserts, Vegetables, Fruits etc. ! \n''',"magenta"))
         x = []
         y = []
         
@@ -200,10 +199,54 @@ class ParentPortal:
         img = mpimg.imread('FoodVSProtein.png')
         imgplot = plt.imshow(img)
         plt.show()
+        self.md_file_analysis()
+
+        #################################################3
 
 
+    
+    
+    def md_file_analysis(self):
+        '''
+        method used to organized the data analysis and visulaization of the Reports 
+        '''
+        mdFile = MdUtils(file_name='foodAnalysis', title='Nutritional Facts for most common foods')
+
+        mdFile.new_header(level=1, title='Overview')  # style is set 'atx' format by default.
+
+        mdFile.new_paragraph("Everybody nowadays is mindful of what they eat."
+                             "Counting calories and reducing fat intake is the number one advice given by all dieticians and nutritionists."
+                             "Therefore, we need to know what foods are rich in what nutrients, don't we?")
+        mdFile.new_paragraph()
+        mdFile.new_header(level=2, title="Content")
+        mdFile.new_paragraph("this  analysis contains a data for the Top 20 foods in the world each with the amount of Calories,"
+                            "Fats, Proteins, Saturated Fats, Carbohydrates, Fibers labelled for each food. "
+                            "Also, the foods are also categorised into various groups like Desserts, Vegetables, Fruits etc.")
+        
+        
+        # ********************************************************************************************************************
+        # ******************************************** Paragraph and Text format *********************************************
+        # ********************************************************************************************************************
+        mdFile.new_header(level=2, title="Top 20 Food Vs Calories")
+        mdFile.new_paragraph(" check out this graphs show  the comparison  of the Calories for each of the food lidt ")
+       
+        image_text = "FoodVSCalories"
+        path = "FoodVSCalories.png"
+        mdFile.new_line(mdFile.new_inline_image(text=image_text, path=path))
 
 
+        mdFile.new_header(level=2, title="Top 20 Food Vs Protein")
+        mdFile.new_paragraph(" check out this graphs show  the comparison  of the Protein for each of the food lidt ")
+       
+        image_text = "FoodVSProtein"
+        path = "FoodVSProtein.png"
+        mdFile.new_line(mdFile.new_inline_image(text=image_text, path=path))
+
+        
+        mdFile.write('\n')
+        # Create a table of contents
+        mdFile.new_table_of_contents(table_title='Contents', depth=2)
+        mdFile.create_md_file()
 
 
         
