@@ -1,7 +1,8 @@
 import pandas as pd
-import json
 from canteen_project.helper_methods import HelperMethods
-import helper_methods
+import termcolor
+from canteen_project.Store import Store
+from strip_ansi import strip_ansi
 
 PROMPTS = (
     'Enter your item: ',
@@ -10,7 +11,9 @@ PROMPTS = (
     'Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): ',
     'Student(T),  Not a student(N): ',
     'Enter Student ID: ',
-    'Do you want to Delete (D), Pay cash (S), or Quit (Q)?: '
+    'Do you want to Delete (D), Pay cash (S), or Quit (Q)?: ',
+    'Do you want to delete another item Y/N?:',
+    'Enter the name of the item to delete: '
 )
 
 
@@ -24,6 +27,13 @@ class CanteenSystem:
         self.student_id = None
         self.customer_type = None
 
+    def _reset_variables(self):
+        self.chosen_items = {}
+        self.student_data = None
+        self.student_idx = None
+        self.student_id = None
+        self.customer_type = None
+
     @staticmethod
     def greeting():
         greet = (
@@ -31,13 +41,14 @@ class CanteenSystem:
    Welcome to the Canteen System
 ===================================
               ''')
-        print(greet)
+        termcolor.cprint(greet, 'green')
         return greet
 
     def _get_menu(self, key):
         store = Store()
         table, items = store.get_items(key)
         print(table)
+        # termcolor.cprint(table, 'blue')
         return items
 
     def _store_items(self, sub_category):
@@ -55,24 +66,6 @@ class CanteenSystem:
         except:
             self.chosen_items[item[0]] = {
                 "Price": item[2], "Quantity": item_qty}
-
-    def _chosen_item(self, sub_category):
-        self._store_items(sub_category)
-        user_input = self.hm.get_user_input(
-            PROMPTS[2], 'char', ['c', 'o', 'g', 'q'])
-        while True:
-            if user_input == 'q':
-                return self._select_from_category(user_input)
-            if user_input == 'g':
-                return self._select_from_category(user_input)
-            if user_input == 'o':
-                return self._select_from_category(user_input)
-            if user_input == 'c':
-                self._store_items(sub_category)
-            else:
-                print("Invalid input======")
-            user_input = self.hm.get_user_input(
-                PROMPTS[2], 'char', ['c', 'o', 'g', 'q'])
 
     def _get_student_id(self):
         self.student_id = self.hm.get_user_input(PROMPTS[5], 'num')
@@ -94,22 +87,9 @@ class CanteenSystem:
                 return True
         return False
 
-    def _select_from_category(self, user_input):
-        user_input = self.hm.get_user_input(
-            PROMPTS[3], 'char', ['s', 'h', 'q', 'd'])
-        if user_input == 'h':
-            items = self._get_menu('Hot food')
-            user_input = self._chosen_item(items)
-            return
-        if user_input == 's':
-            items = self._get_menu('Snacks')
-            user_input = self._chosen_item(items)
-            return
-        if user_input == 'd':
-            items = self._get_menu('Drinks')
-            user_input = self._chosen_item(items)
-            return
-        return user_input
+    def _select_from_category(self, category):
+        items = self._get_menu(category)
+        self._store_items(items)
 
     def _get_customer_type(self):
         customer_type = self.hm.get_user_input(
@@ -118,24 +98,12 @@ class CanteenSystem:
             self._is_student_exist()
         return customer_type
 
-    def order(self):
-        self.customer_type = self._get_customer_type()
-        user_input = self._select_from_category(user_input)
-        if user_input == 'q':
-            return
-        if user_input == 'g':
-            user_input = self.hm.get_user_input(
-                PROMPTS[3], 'char', ['s', 'h', 'd', 'q'])
-            self._select_from_category(user_input)
-        if user_input == 'o':
-            self._check_out(self.customer_type)
-
     def recipe(self):
         df = pd.DataFrame(self.chosen_items).T
         df['Amount'] = df["Price"].multiply(df["Quantity"], axis="index")
         total_row = df.sum(axis=0)
         total_row = ['', total_row[1], total_row[2]]
-        df.loc[''] = ['-------', '------', '-------']
+        df.loc[''] = ['-------', '-------', '-------']
         df.loc['Total'] = total_row
         return df, total_row[2]
 
@@ -143,17 +111,17 @@ class CanteenSystem:
         if customer_type == 't':
             self.credit_payment()
         if customer_type == 'n':
-            print('Customer')
             self.cash_payment()
 
     def cash_payment(self):
         df, total = self.recipe()
-        print(df, '\n')
+        termcolor.cprint(text=f'\n{df}\n', color='red',
+                         attrs=['bold'])
         cash = float(input('Cash amount : '))
         change = cash - total
         df.loc['Cash'] = ['', '', cash]
         df.loc['Change'] = ['', '', change]
-        print(df)
+        termcolor.cprint(text=f'\n{df}\n', color='red', attrs=['bold'])
 
     def _id_search(self, id):
         for idx, student in enumerate(self.students_data):
@@ -166,9 +134,9 @@ class CanteenSystem:
     def credit_payment(self):
         if len(self.chosen_items) == 0:
             print("Please place your order before continiou...")
-            return self.order()
+            return self.logic()
         df, total = self.recipe()
-        print(df)
+        termcolor.cprint(text=f'\n{df}\n', color='red', attrs=['bold'])
         credit_balance = self.student_data['Balance']
         max_daily_credit = self.student_data['Max Daily Credit']
         if total <= max_daily_credit and total < credit_balance:
@@ -178,64 +146,106 @@ class CanteenSystem:
             df.loc['New Balance:'] = ['', '', new_balance]
             self.hm.set_student_info(
                 self.students_data, self.student_data, self.student_idx)
-            print(df)
+            termcolor.cprint(text=f'\n{df}\n', color='red', attrs=['bold'])
         else:
-            print(
-                "The total exceed the max daily credit or your balance is not enough!")
+            termcolor.cprint(
+                text="\nThe total exceed the max daily credit or your balance is not enough!\n",
+                color='red', attrs=['bold', 'underline']
+            )
             user_input = self.hm.get_user_input(
                 PROMPTS[6], 'char', ['d', 's', 'q'])
             if user_input == 'd':
                 self.delete_item()
             if user_input == 's':
                 self.cash_payment()
-            if user_input == 'q':
-                self._quiting()
 
-    def _is_cart_empty(self, cart):
-        return len(cart) == 0
+    def _is_cart_empty(self):
+        return len(self.chosen_items) == 0
 
     def delete_item(self):
         def _delete_again():
             while True:
-                delete_again = input(
-                    'Do you want to delete another item Y/N?: ').lower()
+                delete_again = self.hm.get_user_input(
+                    PROMPTS[7], 'char', ['n', 'y'])
                 if delete_again == 'y':
                     return self.delete_item()
                 elif delete_again == 'n':
                     return self.credit_payment()
-
-        user_input = input('Enter the name of the item to delete: ')
-        try:
-            quantity = self.chosen_items[user_input]['Quantity']
-            if quantity > 1:
-                get_qty = int(input(
-                    f'You have {quantity} items of {user_input}, how many item/s you want to delete: '))
-                if get_qty >= quantity or get_qty < 0:
-                    self.chosen_items.pop(user_input)
-                    if self._is_cart_empty(self.chosen_items):
-                        return self.order()
-                    return _delete_again()
-            if quantity == 1:
-                self.chosen_items.pop(user_input)
-                if self._is_cart_empty(self.chosen_items):
-                    return self.order()
-                return _delete_again()
-            self.chosen_items[user_input]['Quantity'] -= get_qty
-            return _delete_again()
-        except:
-            print('The item does not exist!')
-            self.delete_item()
+        cart_keys = [i.lower() for i in list(self.chosen_items.keys())]
+        user_input = self.hm.get_user_input(
+            PROMPTS[8], 'char', cart_keys).capitalize()
+        quantity = self.chosen_items[user_input]['Quantity']
+        get_qty = self.hm.get_user_input(
+            f'You have {quantity} items of {user_input}, how many item/s you want to delete: ',
+            'num',
+            quantity
+        )
+        self.chosen_items[user_input]['Quantity'] -= get_qty
+        if self.chosen_items[user_input]['Quantity'] == 0:
+            self.chosen_items.pop(user_input)
+        if self._is_cart_empty():
+            termcolor.cprint("\nYour cart are empty!\n", 'red')
+            return self.logic()
+        return _delete_again()
 
     def _quiting(self):
-        print("""
+        termcolor.cprint("""
 ===============================================================
 Thank you for visiting
 ===============================================================
-""")
+""", 'green')
+
+    def logic(self):
+        if not self.customer_type:
+            self.customer_type = self._get_customer_type()
+
+        get_user_category = self.hm.get_user_input(
+            PROMPTS[3], 'char', ['s', 'h', 'q', 'd'])
+
+        def _categories(category):
+            if category == 's':
+                self._select_from_category('Snacks')
+
+            if category == 'h':
+                self._select_from_category('Hot food')
+
+            if category == 'd':
+                self._select_from_category('Drinks')
+
+        user_action = get_user_category
+        while True:
+            if user_action in ['s', 'h', 'd']:
+                get_user_category = user_action
+                _categories(get_user_category)
+                user_action = self.hm.get_user_input(
+                    PROMPTS[2], 'char', ['c', 'o', 'g', 'q'])
+                continue
+
+            if user_action == 'c':
+                _categories(get_user_category)
+                user_action = self.hm.get_user_input(
+                    PROMPTS[2], 'char', ['c', 'o', 'g', 'q'])
+                continue
+
+            if user_action == 'g':
+                user_action = self.hm.get_user_input(
+                    PROMPTS[3], 'char', ['s', 'h', 'q', 'd'])
+                continue
+
+            if user_action == 'o':
+                self._check_out(self.customer_type)
+                # self._quiting()
+                # self._reset_variables()
+                # return self.logic()
+                break
+
+            if user_action == 'q':
+                self._quiting()
+                break
 
 
 if __name__ == '__main__':
     from Store import Store
     CanteenSystem.greeting()
     canteen = CanteenSystem()
-    canteen.order()
+    canteen.logic()

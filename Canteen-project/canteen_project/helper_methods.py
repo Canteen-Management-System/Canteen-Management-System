@@ -1,4 +1,6 @@
 import json
+import termcolor
+import re
 
 
 class HelperMethods:
@@ -28,10 +30,11 @@ class HelperMethods:
         return False
 
     def _check_number(self, user_input, text, _type, limit):
-        user_input = self._is_num_valid(user_input)
-        if not user_input and user_input != 0:
+        validate_user_input = self._is_num_valid(user_input)
+        if not validate_user_input:
             print('Invalid input!')
             return self.get_user_input(text, _type, limit)
+        user_input = int(user_input)
         while True:
             if user_input <= limit and user_input >= 0:
                 return user_input
@@ -40,9 +43,7 @@ class HelperMethods:
                 return self.get_user_input(text, _type, limit)
 
     def _is_num_valid(self, user_input):
-        if user_input.isdigit():
-            return int(user_input)
-        return False
+        return user_input.isdigit()
 
     def _check_number_without_limit(self, user_input, text, _type):
         if user_input.isdigit():
@@ -63,3 +64,8 @@ class HelperMethods:
         json_object = json.dumps(students_data, indent=4)
         with open('Student_info.json', 'w')as f:
             f.write(json_object)
+
+    @staticmethod
+    def escape_ansi(line):
+        ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+        return ansi_escape.sub('', line)
