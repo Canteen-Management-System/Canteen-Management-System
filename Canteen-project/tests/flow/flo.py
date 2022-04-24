@@ -1,6 +1,7 @@
 from ast import arg
 import builtins
 from canteen_project.canteen_pos import CanteenSystem
+import re
 
 
 class Flo:
@@ -28,11 +29,14 @@ class Flo:
 
         with open(self.path) as file:
             for line in file.readlines():
-
                 for prompt in self.PROMPTS:
                     if line.startswith(prompt):
                         response = line.split(prompt)[1].strip()
                         self.responses.append(response)
+
+    def escape_ansi(self, line):
+        ansi_escape = re.compile(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]')
+        return ansi_escape.sub('', line)
 
     @staticmethod
     def test(path):
@@ -68,10 +72,11 @@ class Flo:
             for i, pair in enumerate(pairs):
 
                 actual, expected = pair
-
+                _actual = self.escape_ansi(actual)
+                self.old_input(_actual)
                 assert (
                     actual == expected
-                ), f"line {i + 1} - actual:{actual} - expected:{expected}"
+                ), f"line {i + 1} - actual:{_actual} - expected:{expected}"
 
         builtins.print = self.old_print
         builtins.input = self.old_input
