@@ -1,0 +1,24 @@
+>> Student (T), Or not a student(N): T
+
+>>Choose another item (C), Check out (O), back to categories (G) , Quit (Q): o
+
+>> Enter student ID: 2022459
+
+>> 
+Student Info
+_________________
+ID              : 2022459
+Name            : Ahmad 
+Balance         : 7.3 JOD
+Max daily credit: 1.0 JOD
+_________________
+
+Item Qty Price
+______________
+   1   1   0.1
+   2   1   0.5
+______________
+Total:       0.6 JOD
+Av. Balance: 7.3 JOD
+New Balance: 6.7 JOD
+
