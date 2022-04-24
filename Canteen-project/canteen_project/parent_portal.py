@@ -176,7 +176,6 @@ class ParentPortal:
 
         plt.show(block=True)
         plt.savefig('FoodVSCalories.png')
-        display(Image(filename='FoodVSCalories.png'))
 
         #####################********************************8############################
         W = []
@@ -198,7 +197,6 @@ class ParentPortal:
         plt.legend()
         plt.show()
         plt.savefig('FoodVSProtein.png')
-        return display(Image(filename='FoodVSProtein.png'))
         img = mpimg.imread('FoodVSProtein.png')
         imgplot = plt.imshow(img)
         plt.show()
