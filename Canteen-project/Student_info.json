@@ -18,11 +18,13 @@
     {
         "id": 1,
         "name": "Ali",
-        "Balance": 580.55,
+        "Balance": 147.5,
         "Max Daily Credit": 2.3,
         "Not Allowed Items": [
-            "Apple",
-            "Orange"
+
+            "Meal 1",
+            "Popcorn",
+            "Apple"
         ],
         "Daily meal": [
             [
