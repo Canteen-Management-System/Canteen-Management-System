@@ -130,7 +130,7 @@ class ParentPortal:
             Set_Max-Daily-Credit (M),
             Not-Allowed Items (N),
             Buy daily meal (B),
-            Reports and Analysis (R)
+            Reports and Analysis (A)
             Foods word anlysis (F)
             Quit (Q):  >>  ''', "magenta"))
             if oper.lower() == "q":
@@ -146,12 +146,59 @@ class ParentPortal:
                 self.not_allowed_items(stdId)
             elif oper.lower() == "b":
                 self.buy_daily_meal(stdId)
-            elif oper.lower() == "r":
-                pass
+            elif oper.lower() == "a":
+                self.Std_Report(stdId)
             elif oper.lower() == "f":
                 self.data_analysis()
             else:
                 continue
+    
+
+    def Std_Report(self,stdId):
+        Report = input(termcolor.colored( "\n Select Report Number: "
+                        "\n1- student Daily purchese Report ."
+                        "\n2- Item purchese Qunaity , which show the Top item purchese in the Canteen  ","magenta") )
+        if (Report == "2" ):
+            x = []
+            y = []
+            
+            with open('MealQuantity.csv','r') as csvfile:
+                plots = csv.reader(csvfile, delimiter = ',')
+                
+                for row in plots:
+                    x.append(row[0])
+                    y.append(row[2])
+    
+            plt.bar(x, y, color = 'g', width = 0.72, label = "food")
+            plt.xlabel('Item')
+            plt.ylabel('Quantity')
+            plt.title('Items Quantity')
+            plt.legend()
+            plt.plot(x, y)
+
+            plt.show(block=True)
+            plt.savefig('Report2.png')
+        elif (Report == "1"):
+            x = []
+            y = []
+            
+            with open('studentDailyOrder.csv','r') as csvfile:
+                plots = csv.reader(csvfile, delimiter = ',')
+                
+                for row in plots:
+                    if row[0] == stdId:
+                        x.append(row[2])
+                        y.append(row[3])
+    
+            plt.bar(x, y, color = 'g', width = 0.72, label = "food")
+            plt.xlabel('Date')
+            plt.ylabel('amount')
+            plt.title('purchese amount for an interval ')
+            plt.legend()
+            plt.plot(x, y)
+
+            plt.show(block=True)
+            plt.savefig('Report1.png')
 
 
     def data_analysis(self):
