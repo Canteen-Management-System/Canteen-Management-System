@@ -8,12 +8,14 @@ from datetime import date
 import calendar
 import termcolor
 import os
-import csv
+from csv import writer
 import matplotlib.pyplot as plt
 from IPython.display import display, Image
-import matplotlib.image as mpimg
 from mdutils.mdutils import MdUtils
-from mdutils import Html
+import numpy as np # linear algebra
+import seaborn as sns
+import pandas as pd
+import plotly.express as px
 
 
 
@@ -163,13 +165,13 @@ class ParentPortal:
             y = []
             
             with open('MealQuantity.csv','r') as csvfile:
-                plots = csv.reader(csvfile, delimiter = ',')
+                plots1 = writer.reader(csvfile, delimiter = ',')
                 
-                for row in plots:
+                for row in plots1:
                     x.append(row[0])
                     y.append(row[2])
     
-            plt.bar(x, y, color = 'g', width = 0.72, label = "food")
+            plt.bar(x, y, color = 'g', width = 0.72, label = "IdVSItem")
             plt.xlabel('Item')
             plt.ylabel('Quantity')
             plt.title('Items Quantity')
@@ -178,56 +180,56 @@ class ParentPortal:
 
             plt.show(block=True)
             plt.savefig('Report2.png')
+
         elif (Report == "1"):
-            x = []
-            y = []
+            Xx = []
+            Yy = []
             
             with open('studentDailyOrder.csv','r') as csvfile:
-                plots = csv.reader(csvfile, delimiter = ',')
+                plots2 = writer.reader(csvfile, delimiter = ',')
                 
-                for row in plots:
+                for row in plots2:
                     if row[0] == stdId:
-                        x.append(row[2])
-                        y.append(row[3])
+                        Xx.append(row[2])
+                        Yy.append(row[3])
     
-            plt.bar(x, y, color = 'g', width = 0.72, label = "food")
+            plt.bar(Xx, Yy, color = 'g', width = 0.72, label = "food")
             plt.xlabel('Date')
             plt.ylabel('amount')
             plt.title('purchese amount for an interval ')
             plt.legend()
-            plt.plot(x, y)
+            plt.plot(Xx, Yy)
 
             plt.show(block=True)
             plt.savefig('Report1.png')
 
 
     def data_analysis(self):
-           
-        x = []
-        y = []
+        Xlist = []
+        ylist = []
         
         with open('canteen_project/nutrients_csvfile.csv','r') as csvfile:
-            plots = csv.reader(csvfile, delimiter = ',')
+            plots = writer.reader(csvfile, delimiter = ',')
             
             for row in plots:
-                x.append(row[0])
-                y.append(row[3])
+                Xlist.append(row[0])
+                ylist.append(row[3])
   
-        plt.bar(x, y, color = 'g', width = 0.72, label = "food")
+        plt.bar(Xlist, ylist, color = 'g', width = 0.72, label = "food")
         plt.xlabel('Food')
         plt.ylabel('Calories')
         plt.title('Calories for diff food ')
-        plt.legend()
-        plt.plot(x, y)
+        # plt.legend()
+        # plt.plot(Xlist, ylist)
 
-        plt.show(block=True)
+        # plt.show(block=True)
         plt.savefig('FoodVSCalories.png')
 
-        #####################********************************8############################
+        # #####################********************************8############################
         W = []
         Z = []
         with open('canteen_project/nutrients_csvfile.csv','r') as csvfile:
-            plots = csv.reader(csvfile, delimiter = ',')
+            plots = writer.reader(csvfile, delimiter = ',')
             for row in plots:
                 W.append(row[0])
                 Z.append(row[4])
@@ -240,12 +242,12 @@ class ParentPortal:
         plt.ylabel('Protein')
         plt.title('Protein for diff food', fontsize = 20)
         plt.grid()
-        plt.legend()
-        plt.show()
+        # plt.legend()
+        # plt.show()
         plt.savefig('FoodVSProtein.png')
-        img = mpimg.imread('FoodVSProtein.png')
-        imgplot = plt.imshow(img)
-        plt.show()
+        # img = mpimg.imread('FoodVSProtein.png')
+        # imgplot = plt.imshow(img)
+        # plt.show()
         self.md_file_analysis()
 
         #################################################3
@@ -309,9 +311,11 @@ class ParentPortal:
         today = datetime.date.today()
         curr_date = date.today()
         index = curr_date.weekday()
+        index2 = index +1 
         if index == 6 :
-            index = 0
-        day = calendar.day_name[index]
+            index2 = 0
+        
+        day = calendar.day_name[index2]
         mealdate = today + datetime.timedelta(days = 1) 
         if day == "Friday" :
             day = "Sunday"
@@ -329,7 +333,23 @@ class ParentPortal:
         price = items[int(meal)][2] * -1
         print(f' {items[int(meal)][2]} JD will be detacted from his Balance ')
         Operations.recharge(stdId, price)
-        store.online_order(stdId , meal , mealdate )
+        ###################################################
+        
+        # data rows of csv file 
+        rows = [stdId ,mealdate ,meal]
+            
+        # name of csv file 
+        filename = "foodorders.csv"
+            
+        # writing to csv file 
+        with open('foodorders.csv', 'a', newline='') as f_object:  
+        # Pass the CSV  file object to the writer() function
+            writer_object = writer(f_object)
+            # Result - a writer object
+            # Pass the data in the list as an argument into the writerow() function
+            writer_object.writerow(rows)  
+            # Close the file object
+            f_object.close()
         AllstdInfo = self._get_students_data()
         meadapp = []
         meadapp.append(items[int(meal)][1])
