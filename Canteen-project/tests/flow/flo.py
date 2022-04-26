@@ -18,8 +18,6 @@ class Flo:
         "You have 1 items of Curry with a zip, how many item/s you want to delete: ",
         "Do you want to delete another item Y/N?: ",
         "You have 1 items of Vindaloo, how many item/s you want to delete: ",
-        "Enter Student ID: "
-
     )
 
     def __init__(self, path):
@@ -39,7 +37,6 @@ class Flo:
                     if line.startswith(prompt):
                         response = line.split(prompt)[1].strip()
                         self.responses.append(response)
-        self.old_print(self.responses)
 
     @staticmethod
     def test(path):
@@ -70,6 +67,7 @@ class Flo:
             print_lines = self.prints.strip().split("\n")
 
             file_lines = file.read().strip().split("\n")
+
             for i, line in enumerate(print_lines):
                 line = re.sub(
                     r'\\x1b(\[.*?[@-~]|\].*?(\x07|\x1b\\))', '', line)
