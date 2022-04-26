@@ -71,7 +71,16 @@ class CanteenSystem:
                 "Price": item[2], "Quantity": item_qty}
 
     def _get_student_id(self):
-        self.student_id = self.hm.get_user_input(PROMPTS[5], 'num')
+        self.student_id = int(self.hm.read_QR_code())
+        print(f'Enter Student ID: {self.student_id}')
+
+    def _id_search(self, id):
+        for idx, student in enumerate(self.students_data):
+            if student['id'] == id:
+                self.student_data = student
+                self.student_idx = idx
+                return student, idx
+        return None
 
     def _is_student_exist(self):
         self._get_student_id()
@@ -132,14 +141,6 @@ class CanteenSystem:
         for line in table_line:
             termcolor.cprint(line, color=_color,
                              attrs=_attrs)
-
-    def _id_search(self, id):
-        for idx, student in enumerate(self.students_data):
-            if student['id'] == id:
-                self.student_data = student
-                self.student_idx = idx
-                return student, idx
-        return None
 
     def credit_payment(self):
         if len(self.chosen_items) == 0:
