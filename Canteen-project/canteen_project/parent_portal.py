@@ -226,28 +226,28 @@ class ParentPortal:
         plt.savefig('FoodVSCalories.png')
 
         # #####################********************************8############################
-        W = []
-        Z = []
-        with open('canteen_project/nutrients_csvfile.csv','r') as csvfile:
-            plots = writer.reader(csvfile, delimiter = ',')
-            for row in plots:
-                W.append(row[0])
-                Z.append(row[4])
+        # W = []
+        # Z = []
+        # with open('canteen_project/nutrients_csvfile.csv','r') as csvfile:
+        #     plots = writer.reader(csvfile, delimiter = ',')
+        #     for row in plots:
+        #         W.append(row[0])
+        #         Z.append(row[4])
             
-        plt.plot(W, Z, color = 'g', linestyle = 'dashed',
-                marker = 'o',label = "Protein")
+        # plt.plot(W, Z, color = 'g', linestyle = 'dashed',
+        #         marker = 'o',label = "Protein")
         
-        plt.xticks(rotation = 25)
-        plt.xlabel('Food')
-        plt.ylabel('Protein')
-        plt.title('Protein for diff food', fontsize = 20)
-        plt.grid()
-        # plt.legend()
-        # plt.show()
-        plt.savefig('FoodVSProtein.png')
-        # img = mpimg.imread('FoodVSProtein.png')
-        # imgplot = plt.imshow(img)
-        # plt.show()
+        # plt.xticks(rotation = 25)
+        # plt.xlabel('Food')
+        # plt.ylabel('Protein')
+        # plt.title('Protein for diff food', fontsize = 20)
+        # plt.grid()
+        # # plt.legend()
+        # # plt.show()
+        # plt.savefig('FoodVSProtein.png')
+        # # img = mpimg.imread('FoodVSProtein.png')
+        # # imgplot = plt.imshow(img)
+        # # plt.show()
         self.md_file_analysis()
 
         #################################################3
