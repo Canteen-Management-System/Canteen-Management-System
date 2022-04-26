@@ -70,6 +70,7 @@ class Flo:
             print_lines = self.prints.strip().split("\n")
 
             file_lines = file.read().strip().split("\n")
+
             for i, line in enumerate(print_lines):
                 line = re.sub(
                     r'\\x1b(\[.*?[@-~]|\].*?(\x07|\x1b\\))', '', line)
