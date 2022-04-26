@@ -65,5 +65,5 @@ Total               1.0     0.35
 Apple            0.35      1.0     0.35
               -------  -------  -------
 Total                      1.0     0.35
-Av. Balance:                        1.4
-New Balance:                        8.4
+Av. Balance:                        500
+New Balance:                     499.65
