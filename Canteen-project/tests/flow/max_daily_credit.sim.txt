@@ -1,0 +1,69 @@
+Student(T),  Not a student(N): t
+Enter Student ID: 2022458
+Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): h
+                  Item                                                                                          Description  Price
+0  Peppers with pizazz  Hot peppers are among the most well-known spicy foods and their heat is thanks to a compound cal...   2.00
+1     Curry with a zip   Many curry powder recipes call for cayenne powder, which contains capsaicin and can be quite fi...   2.50
+2             Vindaloo   The original recipe is prepared with chiken meat and can be found mostly in the restaurants of Goa   3.50
+3              Tom yum                                      this spicy soup a mild noodle dish if you can’t handle the heat   3.00
+4        Shrimp creole                                                         Hot pepper sauce and cayenne-based seasoning   2.50
+5         Jerk chicken                                     Real jerk chicken is cooked over both coals and fresh green wood   2.75
+Enter your item: 0
+Enter quantity: 1
+This item not allowed for this student, Please select another item.
+Choose another item (C), Check out (O), back to categories (G) , Quit (Q): C
+                  Item                                                                                          Description  Price
+0  Peppers with pizazz  Hot peppers are among the most well-known spicy foods and their heat is thanks to a compound cal...   2.00
+1     Curry with a zip   Many curry powder recipes call for cayenne powder, which contains capsaicin and can be quite fi...   2.50
+2             Vindaloo   The original recipe is prepared with chiken meat and can be found mostly in the restaurants of Goa   3.50
+3              Tom yum                                      this spicy soup a mild noodle dish if you can’t handle the heat   3.00
+4        Shrimp creole                                                         Hot pepper sauce and cayenne-based seasoning   2.50
+5         Jerk chicken                                     Real jerk chicken is cooked over both coals and fresh green wood   2.75
+Enter your item: 1
+Enter quantity: 1
+Choose another item (C), Check out (O), back to categories (G) , Quit (Q): c
+                  Item                                                                                          Description  Price
+0  Peppers with pizazz  Hot peppers are among the most well-known spicy foods and their heat is thanks to a compound cal...   2.00
+1     Curry with a zip   Many curry powder recipes call for cayenne powder, which contains capsaicin and can be quite fi...   2.50
+2             Vindaloo   The original recipe is prepared with chiken meat and can be found mostly in the restaurants of Goa   3.50
+3              Tom yum                                      this spicy soup a mild noodle dish if you can’t handle the heat   3.00
+4        Shrimp creole                                                         Hot pepper sauce and cayenne-based seasoning   2.50
+5         Jerk chicken                                     Real jerk chicken is cooked over both coals and fresh green wood   2.75
+Enter your item: 2
+Enter quantity: 1
+Choose another item (C), Check out (O), back to categories (G) , Quit (Q): g
+Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): D
+             Item                      Description  Price
+0           Apple                      Fresh juice   0.35
+1          Orange                      Fresh juice   0.35
+2          coffee                 hot coffee drink   0.50
+3        Iced tea             Refreshing tea drink   0.40
+4  Lemon and mint                 hot coffee drink   0.90
+5   Hot chocolate  Hot drink of milk and chocolate   0.50
+Enter your item: 0
+Enter quantity: 1
+Choose another item (C), Check out (O), back to categories (G) , Quit (Q): o
+                    Price Quantity   Amount
+Curry with a zip      2.5      1.0      2.5
+Vindaloo              3.5      1.0      3.5
+Apple                0.35      1.0     0.35
+                  -------  -------  -------
+Total                          3.0     6.35
+The total exceed the max daily credit or your balance is not enough!
+Do you want to Delete (D) or Quit (Q)?: d
+Enter the name of the item to delete: Curry with a zip
+You have 1 items of Curry with a zip, how many item/s you want to delete: 1
+Do you want to delete another item Y/N?: y
+Enter the name of the item to delete: Vindaloo
+You have 1 items of Vindaloo, how many item/s you want to delete: 1
+Do you want to delete another item Y/N?: n
+         Price Quantity   Amount
+Apple     0.35      1.0     0.35
+       -------  -------  -------
+Total               1.0     0.35
+                Price Quantity   Amount
+Apple            0.35      1.0     0.35
+              -------  -------  -------
+Total                      1.0     0.35
+Av. Balance:                        1.4
+New Balance:                        8.4

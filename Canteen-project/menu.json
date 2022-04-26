@@ -1,17 +1,29 @@
 {
     "headers": ["Item", "Description", "Price"],
     "Hot food": [
-        ["Meal 1", "fresh soups with wholemeal bread rolls on the side", 2.0],
-        ["Meal 2", "pasta or lasagne with fresh tomato, bolognaise or vegetable-based sauce", 2.5]
+        ["Peppers with pizazz", "Hot peppers are among the most well-known spicy foods and their heat is thanks to a compound called capsaicin", 2.0],
+        ["Curry with a zip", " Many curry powder recipes call for cayenne powder, which contains capsaicin and can be quite fiery. According to Kang and Kole, cayenne has a Scoville rating between 30,000 and 50,000, which means it quite a bit spicier than jalapeno and Serrano peppers. Other ingredients, including paprika and dried mustard, can add a tiny amount of spice", 2.5],
+        ["Vindaloo", "The original recipe is prepared with chiken meat and can be found mostly in the restaurants of Goa", 3.5],
+        ["Tom yum", "this spicy soup a mild noodle dish if you can’t handle the heat", 3.0],
+        ["Shrimp creole", "Hot pepper sauce and cayenne-based seasoning", 2.5],
+        ["Jerk chicken", "Real jerk chicken is cooked over both coals and fresh green wood", 2.75]
     ],
     "Snacks": [
         ["Popcorn", "type of corn that explodes from the kernel", 0.70],
         ["Baked sweets", "made from butter, flour, eggs,  and shortening", 0.90],
-        ["Pretzels", " baked snacks that are twisted into a knot-like shape", 1.30]
+        ["Pretzels", " baked snacks that are twisted into a knot-like shape", 1.50],
+        ["Cracker nuts", " A snack food produced with peanuts that are coated in a wheat flour dough and then fried or deep-fried", 1.70],
+        ["Gulab jamun", " This is a dessert made with milk, cheese solids, and flour. It is deep-fried and soaked in sugar water flavored with green cardamom, saffron, roses.", 2.30],
+        ["Pizza", " Flat bread with meat, vegetable and/or cheese toppings. ", 1.30],
+        ["Sandesh", "A cheese-based dessert, with added rice flour to form a dough", 1.75]
+    
     ],
-
     "Drinks": [
         ["Apple", "Fresh juice", 0.35],
-        ["Orange", "Fresh juice", 0.35]
+        ["Orange", "Fresh juice", 0.35],
+        ["coffee", "hot coffee drink", 0.50],
+        ["Iced tea", "Refreshing tea drink", 0.40],
+        ["Lemon and mint", "hot coffee drink", 0.90],
+        ["Hot chocolate", "Hot drink of milk and chocolate", 0.50]
     ]
 }

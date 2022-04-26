@@ -1,0 +1,50 @@
+Student(T),  Not a student(N): n
+Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): h
+                  Item                                                                                          Description  Price
+0  Peppers with pizazz  Hot peppers are among the most well-known spicy foods and their heat is thanks to a compound cal...   2.00
+1     Curry with a zip   Many curry powder recipes call for cayenne powder, which contains capsaicin and can be quite fi...   2.50
+2             Vindaloo   The original recipe is prepared with chiken meat and can be found mostly in the restaurants of Goa   3.50
+3              Tom yum                                      this spicy soup a mild noodle dish if you can’t handle the heat   3.00
+4        Shrimp creole                                                         Hot pepper sauce and cayenne-based seasoning   2.50
+5         Jerk chicken                                     Real jerk chicken is cooked over both coals and fresh green wood   2.75
+Enter your item: 1
+Enter quantity: 1
+Choose another item (C), Check out (O), back to categories (G) , Quit (Q): G
+Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): s
+           Item                                                                                          Description  Price
+0       Popcorn                                                           type of corn that explodes from the kernel   0.70
+1  Baked sweets                                                       made from butter, flour, eggs,  and shortening   0.90
+2      Pretzels                                                 baked snacks that are twisted into a knot-like shape   1.50
+3  Cracker nuts   A snack food produced with peanuts that are coated in a wheat flour dough and then fried or dee...   1.70
+4   Gulab jamun   This is a dessert made with milk, cheese solids, and flour. It is deep-fried and soaked in suga...   2.30
+5         Pizza                                             Flat bread with meat, vegetable and/or cheese toppings.    1.30
+6       Sandesh                                        A cheese-based dessert, with added rice flour to form a dough   1.75
+Enter your item: 0
+Enter quantity: 2
+Choose another item (C), Check out (O), back to categories (G) , Quit (Q): G
+Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): D
+             Item                      Description  Price
+0           Apple                      Fresh juice   0.35
+1          Orange                      Fresh juice   0.35
+2          coffee                 hot coffee drink   0.50
+3        Iced tea             Refreshing tea drink   0.40
+4  Lemon and mint                 hot coffee drink   0.90
+5   Hot chocolate  Hot drink of milk and chocolate   0.50
+Enter your item: 0
+Enter quantity: 1
+Choose another item (C), Check out (O), back to categories (G) , Quit (Q): O
+                    Price Quantity   Amount
+Curry with a zip      2.5      1.0      2.5
+Popcorn               0.7      2.0      1.4
+Apple                0.35      1.0     0.35
+                  -------  -------  -------
+Total                          4.0     4.25
+Cash amount : 5
+                    Price Quantity   Amount
+Curry with a zip      2.5      1.0      2.5
+Popcorn               0.7      2.0      1.4
+Apple                0.35      1.0     0.35
+                  -------  -------  -------
+Total                          4.0     4.25
+Cash                                    5.0
+Change                                 0.75
