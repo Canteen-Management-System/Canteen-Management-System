@@ -1,0 +1,23 @@
+Student(T),  Not a student(N): n
+Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): h
+                  Item                                                                                          Description  Price
+0  Peppers with pizazz  Hot peppers are among the most well-known spicy foods and their heat is thanks to a compound cal...   2.00
+1     Curry with a zip   Many curry powder recipes call for cayenne powder, which contains capsaicin and can be quite fi...   2.50
+2             Vindaloo   The original recipe is prepared with chiken meat and can be found mostly in the restaurants of Goa   3.50
+3              Tom yum                                      this spicy soup a mild noodle dish if you can’t handle the heat   3.00
+4        Shrimp creole                                                         Hot pepper sauce and cayenne-based seasoning   2.50
+5         Jerk chicken                                     Real jerk chicken is cooked over both coals and fresh green wood   2.75
+Enter your item: 0
+Enter quantity: 1
+Choose another item (C), Check out (O), back to categories (G) , Quit (Q): o
+                       Price Quantity   Amount
+Peppers with pizazz      2.0      1.0      2.0
+                     -------  -------  -------
+Total                             1.0      2.0
+Cash amount : 10
+                       Price Quantity   Amount
+Peppers with pizazz      2.0      1.0      2.0
+                     -------  -------  -------
+Total                             1.0      2.0
+Cash                                      10.0
+Change                                     8.0

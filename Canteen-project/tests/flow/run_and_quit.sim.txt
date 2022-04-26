@@ -1,0 +1,2 @@
+Student(T),  Not a student(N): n
+Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): q

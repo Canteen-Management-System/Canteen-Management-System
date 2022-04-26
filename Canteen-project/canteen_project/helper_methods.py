@@ -1,6 +1,6 @@
 import json
-import termcolor
 import re
+import csv
 
 
 class HelperMethods:
@@ -15,6 +15,9 @@ class HelperMethods:
 
         if _type == 'num':
             return self._check_number(user_input, text, _type, limit)
+
+        if _type == 'float':
+            return self._check_float_number(user_input, text, _type, limit)
 
     def _check_character(self, user_input, text, _type, limit):
         user_input = user_input.lower()
@@ -51,7 +54,8 @@ class HelperMethods:
         print('Invalid input!')
         return self.get_user_input(text, _type)
 
-    def get_data(self, path):
+    @staticmethod
+    def get_data(path):
         try:
             with open(path, 'r')as f:
                 data = json.load(f)
@@ -65,7 +69,39 @@ class HelperMethods:
         with open('Student_info.json', 'w')as f:
             f.write(json_object)
 
-    @staticmethod
-    def escape_ansi(line):
-        ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
-        return ansi_escape.sub('', line)
+    def _check_float_number(self, user_input, text, _type, limit):
+        is_float = self.is_float(user_input)
+        if not is_float:
+            print('Invalid input!')
+            return self.get_user_input(text, _type, limit)
+        user_input = float(user_input)
+        while True:
+            if user_input >= limit and user_input > 0:
+                return user_input
+            else:
+                print('Invalid number input!')
+                return self.get_user_input(text, _type, limit)
+
+    def is_float(self, num):
+        try:
+            float(num)
+            return True
+        except ValueError:
+            return False
+
+    def get_csv(self, path):
+        try:
+            with open(path, 'r') as f:
+                read = csv.reader(f)
+                data = list(read)
+            return data
+        except FileNotFoundError:
+            return "File Not Found"
+
+    def set_csv(self, path, data):
+        try:
+            with open(path, 'w') as fw:
+                write = csv.writer(fw)
+                write.writerows(data)
+        except FileNotFoundError:
+            return "File Not Found"
