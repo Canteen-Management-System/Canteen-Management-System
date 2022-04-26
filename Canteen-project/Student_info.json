@@ -2,7 +2,7 @@
     {
         "id": 2022458,
         "name": "Ahmad",
-        "Balance": 6.750000000000002,
+        "Balance": 4.750000000000002,
         "Max Daily Credit": 2.0,
         "Not Allowed Items": [
             "Baked sweets",
@@ -20,13 +20,17 @@
             [
                 "fresh soups with wholemeal bread rolls on the side",
                 "2022-04-27"
+            ],
+            [
+                "fresh soups with wholemeal bread rolls on the side",
+                "2022-04-27"
             ]
         ]
     },
     {
         "id": 1,
         "name": "Ali",
-        "Balance": 644.4499999999999,
+        "Balance": 635.4499999999999,
         "Max Daily Credit": 1.5,
         "Not Allowed Items": [
             "Meal 1",
@@ -63,6 +67,22 @@
             ],
             [
                 "fresh soups with wholemeal bread rolls on the side",
+                "2022-04-27"
+            ],
+            [
+                "fresh soups with wholemeal bread rolls on the side",
+                "2022-04-27"
+            ],
+            [
+                "pasta or lasagne with fresh tomato, bolognaise or vegetable-based sauce",
+                "2022-04-27"
+            ],
+            [
+                "fresh soups with wholemeal bread rolls on the side",
+                "2022-04-27"
+            ],
+            [
+                "pasta or lasagne with fresh tomato, bolognaise or vegetable-based sauce",
                 "2022-04-27"
             ],
             [

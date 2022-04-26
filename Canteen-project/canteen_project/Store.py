@@ -1,7 +1,11 @@
 import csv
 from itertools import count
+from re import A
+from tkinter import Menu
 import pandas as pd
 import json
+
+from sqlalchemy import true
 from canteen_project.queue import Queue,Node
 import termcolor
 from csv import writer
@@ -26,15 +30,34 @@ class Store():
         return table, items[key]
     
     def Add_item(self):
-        pass
-
-    def online_order(self, stdid, meal, date):
-        self.queue1.enqueue(stdid)
-        self.queue1.enqueue(meal)
-        self.queue1.enqueue(date)
+        menu = self._get_menu_data()
+        while true:
+            key = ""
+            add = []
+            Category = input(termcolor.colored ('Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q) >>   ', "magenta" ))
+            if Category.lower() == 'h':
+                key = "Hot food"
+            elif Category.lower() == 's':
+                key = 'Snacks'
+            elif Category.lower() == 'd':
+                key = 'Drinks'
+            elif Category.lower() == "q":
+                        break
+            mname  = input("Meal Name  >> ")
+            add.append(mname)
+            mdescribtion = input (" Description  >>")
+            add.append(mdescribtion)
+            mprice = input("price   >> ")
+            add.append(mprice)
+            menu[key] += [add]
+            f = open("menu.json", "w")
+            json.dump(menu, f)
+            f.close()
+        print("\n\n Items added ..")
 
 
     def pop_online_orders(self):
+            listofRows = []
             with open('foodorders.csv') as file_obj:
                 # Skips the heading
                 # Using next() method
@@ -49,20 +72,23 @@ class Store():
                 print( "\n you have the below Online orders : \n " )
                 count = 1
                 for row in reader_obj:
-                    print(f'{count} : {str(row)}')
+                    print(f'{count}  : StID = {row[0]}   Date = {row[1]}    Meal no. {row[2]}')
+                    listofRows.append(row)
                     count+=1
             if count == 1:
-                print("\n \n there are no pending orders .. ")
+                print(termcolor.colored("\n \n there are no pending orders ..\n ","yellow"))
             deliver = input ("Type Yes (Y) to deliver the first order , No (N) to Quit and deliver later ")
             if deliver.lower() == "y":
-                url = "foodorders.csv"
-                df = pd.read_csv(url)
-                df = df.iloc[1:]
-                df.to_csv('foodorders.csv',                              # Export pandas DataFrame
-                sep = ",")
-
+            # writing to csv file 
+                with open('foodorders.csv', 'w') as csvfile: 
+                    # creating a csv writer object 
+                    csvwriter = csv.writer(csvfile) 
+                    # writing the data rows 
+                    i = 1
+                    for i in range(len(listofRows)-1):
+                        csvwriter.writerow(listofRows[i+1])
                 print("Thank you ")
-        
+            
                         
 
 
