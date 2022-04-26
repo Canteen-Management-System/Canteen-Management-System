@@ -2,7 +2,7 @@ import pandas as pd
 from canteen_project.helper_methods import HelperMethods
 import termcolor
 from canteen_project.Store import Store
-from strip_ansi import strip_ansi
+from datetime import date
 
 PROMPTS = (
     'Enter your item: ',
@@ -11,8 +11,8 @@ PROMPTS = (
     'Enter category Hot food (H), Snacks (S), Drinks (D), Quit (Q): ',
     'Student(T),  Not a student(N): ',
     'Enter Student ID: ',
-    'Do you want to Delete (D), Pay cash (S), or Quit (Q)?: ',
-    'Do you want to delete another item Y/N?:',
+    'Do you want to Delete (D) or Quit (Q)?: ',
+    'Do you want to delete another item Y/N?: ',
     'Enter the name of the item to delete: '
 )
 
@@ -47,8 +47,11 @@ class CanteenSystem:
     def _get_menu(self, key):
         store = Store()
         table, items = store.get_items(key)
-        print(table)
-        # termcolor.cprint(table, 'blue')
+        table_line = table.to_string(
+            header=True, max_colwidth=100, index=True, index_names=False).split('\n')
+        for line in table_line:
+            termcolor.cprint(
+                f'{line}', color='blue', attrs=['bold'])
         return items
 
     def _store_items(self, sub_category):
@@ -83,7 +86,7 @@ class CanteenSystem:
         for item in not_allowed_items:
             if item == selected_item:
                 print(
-                    'This item not allowed for this student\n Please select another item.')
+                    'This item not allowed for this student, Please select another item.')
                 return True
         return False
 
@@ -115,13 +118,20 @@ class CanteenSystem:
 
     def cash_payment(self):
         df, total = self.recipe()
-        termcolor.cprint(text=f'\n{df}\n', color='red',
-                         attrs=['bold'])
-        cash = float(input('Cash amount : '))
+        self._print_table(df, 'red', ['bold'])
+        cash = self.hm.get_user_input('Cash amount : ', 'float', total)
         change = cash - total
         df.loc['Cash'] = ['', '', cash]
         df.loc['Change'] = ['', '', change]
-        termcolor.cprint(text=f'\n{df}\n', color='red', attrs=['bold'])
+        self._print_table(df, 'red', ['bold'])
+        self.meal_quantity()
+
+    def _print_table(self, df, _color, _attrs=[]):
+        table_line = df.to_string(
+            header=True, index=True, index_names=True).split('\n')
+        for line in table_line:
+            termcolor.cprint(line, color=_color,
+                             attrs=_attrs)
 
     def _id_search(self, id):
         for idx, student in enumerate(self.students_data):
@@ -136,7 +146,7 @@ class CanteenSystem:
             print("Please place your order before continiou...")
             return self.logic()
         df, total = self.recipe()
-        termcolor.cprint(text=f'\n{df}\n', color='red', attrs=['bold'])
+        self._print_table(df, 'red', ['bold'])
         credit_balance = self.student_data['Balance']
         max_daily_credit = self.student_data['Max Daily Credit']
         if total <= max_daily_credit and total < credit_balance:
@@ -146,10 +156,12 @@ class CanteenSystem:
             df.loc['New Balance:'] = ['', '', new_balance]
             self.hm.set_student_info(
                 self.students_data, self.student_data, self.student_idx)
-            termcolor.cprint(text=f'\n{df}\n', color='red', attrs=['bold'])
+            self._print_table(df, 'red', ['bold'])
+            self.meal_quantity()
+            self.student_daily_order()
         else:
             termcolor.cprint(
-                text="\nThe total exceed the max daily credit or your balance is not enough!\n",
+                text="The total exceed the max daily credit or your balance is not enough!",
                 color='red', attrs=['bold', 'underline']
             )
             user_input = self.hm.get_user_input(
@@ -198,17 +210,14 @@ Thank you for visiting
     def logic(self):
         if not self.customer_type:
             self.customer_type = self._get_customer_type()
-
         get_user_category = self.hm.get_user_input(
             PROMPTS[3], 'char', ['s', 'h', 'q', 'd'])
 
         def _categories(category):
             if category == 's':
                 self._select_from_category('Snacks')
-
             if category == 'h':
                 self._select_from_category('Hot food')
-
             if category == 'd':
                 self._select_from_category('Drinks')
 
@@ -242,6 +251,22 @@ Thank you for visiting
             if user_action == 'q':
                 self._quiting()
                 break
+
+    def student_daily_order(self):
+        data = self.hm.get_csv('studentDailyOrder.csv')
+        df, total = self.recipe()
+        new_data = [self.student_data['id'],
+                    self.student_data['name'], date.today(), total]
+        data.append(new_data)
+        self.hm.set_csv('studentDailyOrder.csv', data)
+
+    def meal_quantity(self):
+        data = self.hm.get_csv('MealQuantity.csv')
+        recipe = list(self.chosen_items.items())
+        for i in recipe:
+            list1 = [i[0], date.today(), i[1]['Quantity']]
+            data.append(list1)
+        self.hm.set_csv('MealQuantity.csv', data)
 
 
 if __name__ == '__main__':
