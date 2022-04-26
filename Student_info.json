@@ -3,12 +3,10 @@
         "id": 2022458,
         "name": "Ahmad",
         "Balance": 8.750000000000002,
-        "Max Daily Credit": 2.0,
+        "Max Daily Credit": 15.0,
         "Not Allowed Items": [
             "Baked sweets",
-            "Meal 1",
-            "Meal 1",
-            "Pretzels"
+            "Meal 1"
         ],
         "Daily meal": [
             [

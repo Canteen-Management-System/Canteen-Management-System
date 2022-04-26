@@ -1,8 +1,9 @@
 import json
 from textwrap import indent
 import pandas as pd
-from canteen_pos import CanteenSystem
-from Store import Store
+from canteen_project.canteen_pos import CanteenSystem
+
+from canteen_project.Store import Store
 import datetime 
 from datetime import date
 import calendar
@@ -100,7 +101,7 @@ class ParentPortal:
         input : path of the Jeson file  
         output : read and return the whole file data 
         '''
-        with open('/home/student88/CanteenMangmentSystem/Canteen-Management-System/Canteen-project/Student_info.json', 'r') as f:
+        with open('/home/hind/Canteen-Management-System/Canteen-project/Student_info.json', 'r') as f:
             data = json.load(f)
         return data
 

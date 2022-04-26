@@ -21,8 +21,6 @@ class Qr():
     @staticmethod
     def Read_Qr(path):
         
-
-        
                 image = cv2.imread(path)
                 detect = cv2.QRCodeDetector()
                
@@ -55,6 +53,6 @@ class Qr():
 
 
 if __name__ == '__main__':
-    Qr.Read_Qr('canteen_project/imgQr/2022450.png')
+    Qr.Read_Qr('/home/hind/Canteen-Management-System/Canteen-project/canteen_project/imgQr/2022458.png')
     Qr.Create_Qr()
     # Qr.Scan_Qr()
