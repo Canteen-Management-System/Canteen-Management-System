@@ -1,0 +1,10 @@
+Food,Measure,Grams,Calories,Protein,Fat,Sat.Fat,Fiber,Carbs,Category
+Cows' milk,1 qt.,976,660,32,40,36,0,48,Dairy products
+Milk skim,1 qt.,984,360,36,t,t,0,52,Dairy products
+Buttermilk,1 cup,246,127,9,5,4,0,13,Dairy products
+"Evaporated, undiluted",1 cup,252,345,16,20,18,0,24,Dairy products
+Fortified milk,6 cups,"1,419","1,373",89,42,23,1.4,119,Dairy products
+Powdered milk,1 cup,103,515,27,28,24,0,39,Dairy products
+"skim, instant",1 1/3 cups,85,290,30,t,t,0,42,Dairy products
+"skim, non-instant",2/3 cup,85,290,30,t,t,1,42,Dairy products
+Goats' milk,1 cup,244,165,8,10,8,0,11,Dairy products
