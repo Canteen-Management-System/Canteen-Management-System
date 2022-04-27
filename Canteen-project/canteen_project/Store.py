@@ -1,16 +1,13 @@
 import csv
 from itertools import count
-from re import A
 from tkinter import Menu
 import pandas as pd
 import json
-
-from sqlalchemy import true
-from canteen_project.queue import Queue,Node
+from canteen_project.queue import Queue, Node
 import termcolor
 from csv import writer
-
-
+import subprocess
+import os
 
 
 class Store():
@@ -28,13 +25,14 @@ class Store():
         indics = [i for i in range(len(items[key]))]
         table = pd.DataFrame(items[key], indics, items['headers'])
         return table, items[key]
-    
+
     def Add_item(self):
         menu = self._get_menu_data()
-        while true:
+        while True:
             key = ""
             add = []
-            Category = input(termcolor.colored ('Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q) >>   ', "magenta" ))
+            Category = input(termcolor.colored(
+                'Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q) >>   ', "magenta"))
             if Category.lower() == 'h':
                 key = "Hot food"
             elif Category.lower() == 's':
@@ -42,7 +40,7 @@ class Store():
             elif Category.lower() == 'd':
                 key = 'Drinks'
             elif Category.lower() == "q":
-                        break
+                break
             else:
                 continue
             mname  = input("Item Name  >> ")
@@ -53,10 +51,9 @@ class Store():
             add.append(mprice)
             menu[key] += [add]
             f = open("menu.json", "w")
-            json.dump(menu, f, indent = 4)
+            json.dump(menu, f, indent=4)
             f.close()
         print("\n\n Items added ..")
-
 
     def pop_online_orders(self):
             listofRows = []
@@ -90,27 +87,31 @@ class Store():
 
         
 
+
     def store_portal(self):
-        print( termcolor.colored('''
+        print(termcolor.colored('''
         ****************************************************************
         ************  Welcome to Canteen Store Portal *****************
         ****************************************************************
-        ''' , "green" ))
+        ''', "green"))
         while(True):
-            task = input(termcolor.colored ('''
+            task = input(termcolor.colored('''
                 Type In the letter between parentheses to select the option .. \n
                 Add Items (A),
-                view Available Item (V),
-                online orders (O),
+                View Available Item (V),
+                Online orders (O),
+                View store report (R),
                 Quit (Q):  >>  ''', "red"))
             if task.lower() == "q":
-                print(termcolor.colored("\n Thank you for using Canteen- Store System \n","red"))
+                print(termcolor.colored(
+                    "\n Thank you for using Canteen- Store System \n", "red"))
                 break
             elif task.lower() == "a":
                 self.Add_item()
             elif task.lower() == "v":
                 while (True):
-                    Category = input(termcolor.colored ('Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q) >>   ', "magenta" ))
+                    Category = input(termcolor.colored(
+                        'Enter category Hot food (H), Snacks (S), Drinks (d), Quit  (Q) >>   ', "magenta"))
                     if Category.lower() == 'h':
                         table, items = self.get_items('Hot food')
                         print(table)
@@ -118,12 +119,15 @@ class Store():
                         table, items = self.get_items('Snacks')
                         print(table)
                     elif Category.lower() == 'd':
-                        table, items =self.get_items('Drinks')
+                        table, items = self.get_items('Drinks')
                         print(table)
                     elif Category.lower() == "q":
                         break
             elif task.lower() == "o":
                 self.pop_online_orders()
+            elif task.lower() == 'r':
+                process = subprocess.Popen(["streamlit", "run", os.path.join(
+                    'Analysis', 'meadAnalysis.py')])
             else:
                 continue
 
@@ -131,5 +135,3 @@ class Store():
 if __name__ == '__main__':
     store1 = Store()
     store1.store_portal()
-
-
