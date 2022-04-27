@@ -26,13 +26,9 @@ cs = CS()
 
 def test_get_menu_method():
     actual = cs._get_menu('Hot food')
-    expected = ['Peppers With Pizazz',
+    expected = ['Peppers with pizazz',
                 'Hot peppers are among the most well-known spicy foods and their heat is thanks to a compound called capsaicin', 2.0]
     assert actual[0] == expected
-
-
-def test_store_items():
-    pass
 
 
 def test_not_allowed_item_for_student_2022458(get_students):
@@ -42,23 +38,10 @@ def test_not_allowed_item_for_student_2022458(get_students):
     assert actual_id == expected_id
 
     not_alloed_items = student['Not Allowed Items']
-    selected_item = "Meal 1"
+    selected_item = "Peppers with pizazz"
     actual = True if selected_item in not_alloed_items else False
     expected = True
     assert actual == expected
-
-
-def test_recipe():
-    cs.chosen_items = {
-        "Peppers With Pizazz": {
-            "Quantity": 2,
-            "Price": 2
-        }
-    }
-    table, total = cs.recipe()
-    actual = table.to_string()
-    expected = ''
-    assert total == expected
 
 
 @pytest.fixture

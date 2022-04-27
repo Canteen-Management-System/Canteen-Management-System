@@ -51,7 +51,6 @@ class Flo:
         self.prints += str(args) + "\n"
 
     def _mock_input(self, *args, **kwargs):
-
         self.prints += str(*args)
 
         response = self.responses.pop(0)
@@ -77,7 +76,6 @@ class Flo:
 
             for i, pair in enumerate(pairs):
                 actual, expected = pair
-                self.old_print(actual)
                 assert (
                     actual == expected
                 ), f"line {i + 1} - actual:{actual} - expected:{expected}"
