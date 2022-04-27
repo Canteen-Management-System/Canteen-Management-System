@@ -43,9 +43,9 @@ class Store():
                 break
             else:
                 continue
-            mname = input("Item Name  >> ")
+            mname  = input("Item Name  >> ")
             add.append(mname)
-            mdescribtion = input("Description  >> ")
+            mdescribtion = input ("Description  >>")
             add.append(mdescribtion)
             mprice = input("Price   >> ")
             add.append(mprice)
@@ -56,28 +56,37 @@ class Store():
         print("\n\n Items added ..")
 
     def pop_online_orders(self):
-        listofRows = []
-        with open('foodorders.csv') as file_obj:
-            reader_obj = csv.reader(file_obj)
-            print("\n you have the below Online orders : \n ")
-            count = 1
-            for row in reader_obj:
-                print(
-                    f'{count}  : StID = {row[0]}   Date = {row[1]}    Meal no. {row[2]}')
-                listofRows.append(row)
-                count += 1
-        if count == 1:
-            print(termcolor.colored(
-                "\n \n there are no pending orders ..\n ", "yellow"))
-        deliver = input(
-            "Type Yes (Y) to deliver the first order , No (N) to Quit and deliver later ")
-        if deliver.lower() == "y":
-            with open('foodorders.csv', 'w') as csvfile:
-                csvwriter = csv.writer(csvfile)
-                i = 1
-                for i in range(len(listofRows)-1):
-                    csvwriter.writerow(listofRows[i+1])
-            print("Thank you ")
+            listofRows = []
+            with open('foodorders.csv') as file_obj:
+                reader_obj = csv.reader(file_obj)
+                print( "\n you have the below Online orders : \n " )
+                count = 1
+                for row in reader_obj:
+                    print(f'{count}  : StID = {row[0]}   Date = {row[1]}    Meal no. {row[2]}')
+                    listofRows.append(row)
+                    count+=1
+            if count == 1:
+                print(termcolor.colored("\n \n there are no pending orders ..\n ","yellow"))
+            deliver = input ("Type Yes (Y) to deliver the first order , No (N) to Quit and deliver later ")
+            if deliver.lower() == "y":
+            # writing to csv file 
+                with open('foodorders.csv', 'w') as csvfile: 
+                    # creating a csv writer object 
+                    csvwriter = csv.writer(csvfile) 
+                    # writing the data rows 
+                    i = 1
+                    for i in range(len(listofRows)-1):
+                        csvwriter.writerow(listofRows[i+1])
+                print("Thank you ")
+            
+                        
+
+
+
+
+
+        
+
 
     def store_portal(self):
         print(termcolor.colored('''
