@@ -6,6 +6,8 @@ import json
 from canteen_project.queue import Queue, Node
 import termcolor
 from csv import writer
+import subprocess
+import os
 
 
 class Store():
@@ -56,16 +58,7 @@ class Store():
     def pop_online_orders(self):
         listofRows = []
         with open('foodorders.csv') as file_obj:
-            # Skips the heading
-            # Using next() method
-            # heading = next(file_obj)
-
-            # Create reader object by passing the file
-            # object to reader method
             reader_obj = csv.reader(file_obj)
-
-            # Iterate over each row in the csv file
-            # using reader object
             print("\n you have the below Online orders : \n ")
             count = 1
             for row in reader_obj:
@@ -79,11 +72,8 @@ class Store():
         deliver = input(
             "Type Yes (Y) to deliver the first order , No (N) to Quit and deliver later ")
         if deliver.lower() == "y":
-            # writing to csv file
             with open('foodorders.csv', 'w') as csvfile:
-                # creating a csv writer object
                 csvwriter = csv.writer(csvfile)
-                # writing the data rows
                 i = 1
                 for i in range(len(listofRows)-1):
                     csvwriter.writerow(listofRows[i+1])
@@ -99,8 +89,9 @@ class Store():
             task = input(termcolor.colored('''
                 Type In the letter between parentheses to select the option .. \n
                 Add Items (A),
-                view Available Item (V),
-                online orders (O),
+                View Available Item (V),
+                Online orders (O),
+                View store report (R),
                 Quit (Q):  >>  ''', "red"))
             if task.lower() == "q":
                 print(termcolor.colored(
@@ -125,6 +116,9 @@ class Store():
                         break
             elif task.lower() == "o":
                 self.pop_online_orders()
+            elif task.lower() == 'r':
+                process = subprocess.Popen(["streamlit", "run", os.path.join(
+                    'Analysis', 'meadAnalysis.py')])
             else:
                 continue
 
