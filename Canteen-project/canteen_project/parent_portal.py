@@ -9,13 +9,10 @@ import calendar
 import termcolor
 import os
 from csv import writer
-import matplotlib.pyplot as plt
 from IPython.display import display, Image
 from mdutils.mdutils import MdUtils
-import numpy as np # linear algebra
-import seaborn as sns
 import pandas as pd
-import plotly.express as px
+import subprocess
 
 
 
@@ -157,147 +154,15 @@ class ParentPortal:
     
 
     def Std_Report(self,stdId):
-        Report = input(termcolor.colored( "\n Select Report Number: "
-                        "\n1- student Daily purchese Report ."
-                        "\n2- Item purchese Qunaity , which show the Top item purchese in the Canteen  ","magenta") )
-        if (Report == "2" ):
-            x = []
-            y = []
-            
-            with open('MealQuantity.csv','r') as csvfile:
-                plots1 = writer.reader(csvfile, delimiter = ',')
-                
-                for row in plots1:
-                    x.append(row[0])
-                    y.append(row[2])
-    
-            plt.bar(x, y, color = 'g', width = 0.72, label = "IdVSItem")
-            plt.xlabel('Item')
-            plt.ylabel('Quantity')
-            plt.title('Items Quantity')
-            plt.legend()
-            plt.plot(x, y)
-
-            plt.show(block=True)
-            plt.savefig('Report2.png')
-
-        elif (Report == "1"):
-            Xx = []
-            Yy = []
-            
-            with open('studentDailyOrder.csv','r') as csvfile:
-                plots2 = writer.reader(csvfile, delimiter = ',')
-                
-                for row in plots2:
-                    if row[0] == stdId:
-                        Xx.append(row[2])
-                        Yy.append(row[3])
-    
-            plt.bar(Xx, Yy, color = 'g', width = 0.72, label = "food")
-            plt.xlabel('Date')
-            plt.ylabel('amount')
-            plt.title('purchese amount for an interval ')
-            plt.legend()
-            plt.plot(Xx, Yy)
-
-            plt.show(block=True)
-            plt.savefig('Report1.png')
-
+        print(termcolor.colored( " Kindly Open the below link by click on both Ctr + click on the link to get \n student Daily purchese Report .","magenta") )
+        process = subprocess.Popen(["streamlit", "run", os.path.join(
+        'Analysis', 'stdAnalysis.py')])
+        
 
     def data_analysis(self):
-        Xlist = []
-        ylist = []
-        
-        with open('canteen_project/nutrients_csvfile.csv','r') as csvfile:
-            plots = writer.reader(csvfile, delimiter = ',')
-            
-            for row in plots:
-                Xlist.append(row[0])
-                ylist.append(row[3])
-  
-        plt.bar(Xlist, ylist, color = 'g', width = 0.72, label = "food")
-        plt.xlabel('Food')
-        plt.ylabel('Calories')
-        plt.title('Calories for diff food ')
-        # plt.legend()
-        # plt.plot(Xlist, ylist)
-
-        # plt.show(block=True)
-        plt.savefig('FoodVSCalories.png')
-
-        # #####################********************************8############################
-        W = []
-        Z = []
-        with open('canteen_project/nutrients_csvfile.csv','r') as csvfile:
-            plots = writer.reader(csvfile, delimiter = ',')
-            for row in plots:
-                W.append(row[0])
-                Z.append(row[4])
-            
-        plt.plot(W, Z, color = 'g', linestyle = 'dashed',
-                marker = 'o',label = "Protein")
-        
-        plt.xticks(rotation = 25)
-        plt.xlabel('Food')
-        plt.ylabel('Protein')
-        plt.title('Protein for diff food', fontsize = 20)
-        plt.grid()
-        # plt.legend()
-        # plt.show()
-        plt.savefig('FoodVSProtein.png')
-        # img = mpimg.imread('FoodVSProtein.png')
-        # imgplot = plt.imshow(img)
-        # plt.show()
-        self.md_file_analysis()
-
-        #################################################3
-
-
-    
-    
-    def md_file_analysis(self):
-        '''
-        method used to organized the data analysis and visulaization of the Reports 
-        '''
-        mdFile = MdUtils(file_name='foodAnalysis', title='Nutritional Facts for most common foods')
-
-        mdFile.new_header(level=1, title='Overview')  # style is set 'atx' format by default.
-
-        mdFile.new_paragraph("Everybody nowadays is mindful of what they eat."
-                             "Counting calories and reducing fat intake is the number one advice given by all dieticians and nutritionists."
-                             "Therefore, we need to know what foods are rich in what nutrients, don't we?")
-        mdFile.new_paragraph()
-        mdFile.new_header(level=2, title="Content")
-        mdFile.new_paragraph("this  analysis contains a data for the Top 20 foods in the world each with the amount of Calories,"
-                            "Fats, Proteins, Saturated Fats, Carbohydrates, Fibers labelled for each food. "
-                            "Also, the foods are also categorised into various groups like Desserts, Vegetables, Fruits etc.")
-        
-        
-        # ********************************************************************************************************************
-        # ******************************************** Paragraph and Text format *********************************************
-        # ********************************************************************************************************************
-        mdFile.new_header(level=2, title="Top 20 Food Vs Calories")
-        mdFile.new_paragraph(" check out this graphs show  the comparison  of the Calories for each of the food lidt ")
+        process = subprocess.Popen(["streamlit", "run", os.path.join(
+        'Analysis', 'analysisFood.py')])
        
-        image_text = "FoodVSCalories"
-        path = "FoodVSCalories.png"
-        mdFile.new_line(mdFile.new_inline_image(text=image_text, path=path))
-
-
-        mdFile.new_header(level=2, title="Top 20 Food Vs Protein")
-        mdFile.new_paragraph(" check out this graphs show  the comparison  of the Protein for each of the food lidt ")
-       
-        image_text = "FoodVSProtein"
-        path = "FoodVSProtein.png"
-        mdFile.new_line(mdFile.new_inline_image(text=image_text, path=path))
-
-        
-        mdFile.write('\n')
-        # Create a table of contents
-        mdFile.new_table_of_contents(table_title='Contents', depth=2)
-        mdFile.create_md_file()
-
-
         
     def buy_daily_meal(self,stdId):
         '''

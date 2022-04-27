@@ -43,15 +43,17 @@ class Store():
                 key = 'Drinks'
             elif Category.lower() == "q":
                         break
-            mname  = input("Meal Name  >> ")
+            else:
+                continue
+            mname  = input("Item Name  >> ")
             add.append(mname)
-            mdescribtion = input (" Description  >>")
+            mdescribtion = input ("Description  >>")
             add.append(mdescribtion)
-            mprice = input("price   >> ")
+            mprice = input("Price   >> ")
             add.append(mprice)
             menu[key] += [add]
             f = open("menu.json", "w")
-            json.dump(menu, f)
+            json.dump(menu, f, indent = 4)
             f.close()
         print("\n\n Items added ..")
 
@@ -59,16 +61,7 @@ class Store():
     def pop_online_orders(self):
             listofRows = []
             with open('foodorders.csv') as file_obj:
-                # Skips the heading
-                # Using next() method
-                # heading = next(file_obj)
-                
-                # Create reader object by passing the file 
-                # object to reader method
                 reader_obj = csv.reader(file_obj)
-                
-                # Iterate over each row in the csv file 
-                # using reader object
                 print( "\n you have the below Online orders : \n " )
                 count = 1
                 for row in reader_obj:
